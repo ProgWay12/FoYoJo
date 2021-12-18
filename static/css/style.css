@@ -34,6 +34,10 @@ header, footer {
     font-family: 'Roboto', sans-serif;
 }
 
+input {
+    -webkit-appearance: none;
+}
+
 .header_logo h1 {
     color: black;
     font-weight: 700;
@@ -633,6 +637,14 @@ form button {
 }
 
 @media screen and (max-width: 500px) {
+    input, select, textarea, button {
+        font-size: 16px!important;
+    }
+
+    input::placeholder, select::placeholder, textarea::placeholder {
+        font-size: 16px!important;
+    }
+
     main {
         width: 95%;
         margin-top: 35px;
@@ -658,6 +670,7 @@ form button {
     .left_menu select {
         width: 95%;
         height: 50px;
+        font-size: 16px;
     }
 
     .left_menu button {
@@ -769,6 +782,36 @@ form button {
     }
 
     .vacancy_submit a {
+        font-size: 16px;
+    }
+
+    .account_logo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .account_info p {
+        line-height: 37px;
+        padding-left: 15px;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .header_logo.form_page {
+        width: 100%;
+    }
+
+    .login_form {
+        width: 90%;
+    }
+
+    .forms_footer {
+        display: none;
+    }
+
+    form button {
+        width: 100%;
+        margin: 0;
         font-size: 16px;
     }
 }
