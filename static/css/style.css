@@ -279,11 +279,12 @@ main {
     font-weight: 400;
 }
 
-.each_vacancy_desceiption_text span {
+.each_vacancy_desceiption_text a {
     color: #FAC037;
+    display: contents;
 }
 
-.each_vacancy_desceiption_text span:hover {
+.each_vacancy_desceiption_text a:hover {
     cursor: pointer;
 }
 
@@ -813,5 +814,63 @@ form button {
         width: 100%;
         margin: 0;
         font-size: 16px;
+    }
+
+    .vacancy_info.img_slider {
+        margin-bottom: 5px;
+    }
+
+    .img_row {
+        display: block;
+        width: 100%;
+    }
+
+    .main_img {
+        width: 100%;
+    }
+
+    .right_alingn_imgs {
+        width: 100%;
+    }
+
+    .right_alingn_imgs img {
+        margin-bottom: 15px;
+    }
+
+    .img_row img {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .short_description_row p {
+        font-size: 16px;
+    }
+
+    .com_logo img {
+        display: none;
+    }
+
+    .page_header.back_link {
+        margin: 0;
+    }
+
+    .page_header.back_link a {
+        font-size: 18px;
+    }
+
+    .page_content_profile_container {
+        display: block;
+    }
+
+    .profile_container_img {
+        height: fit-content;
+        width: 50%;
+        margin-left: 25%;
+        margin-bottom: 30px;
+        margin-right: 40px;
+    }
+
+    .profile_container_form {
+        width: 100%;
     }
 }
