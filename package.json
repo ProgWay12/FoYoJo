@@ -1,0 +1,17 @@
+{
+  "name": "foyojo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "ProgWay",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^6.0.2",
+    "hbs": "^4.2.0"
+  }
+}

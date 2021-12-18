@@ -1,0 +1,774 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+*, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #F6F6F6;
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+br {
+    height: 10px;
+}
+
+header, footer {
+    position: relative;
+    display: flex;
+    background-color: #FAC037;
+    width: 80%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.header_logo h1 {
+    color: black;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 35px;
+}
+
+.header_logo {
+    width: 10%;
+}
+
+.header_logo.form_page {
+    margin: 0 auto;
+}
+
+.header_logo.form_page h1 {
+    text-align: center;
+}
+
+.header_logo h1 span {
+    color: white;
+}
+
+.header_buttons {
+    position: absolute;
+    right: 10%;
+    width: 22%;
+    display: flex;
+}
+
+.header_account {
+    position: absolute;
+    right: 10%;
+    display: flex;
+    width: fit-content;
+}
+
+.header_account:hover {
+    cursor: pointer;
+}
+
+.account_logo {
+    width: 38px;
+    height: 38px;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.account_logo img {
+    width: 100%;
+    vertical-align: bottom;
+}
+
+.account_info p {
+    line-height: 40px;
+    padding-left: 15px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+header button:first-child {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+header button {
+    display: inline;
+    width: 45%;
+    color: white;
+    background-color: black;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    font-weight: 700;
+    height: 35px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.header_buttons_info {
+    display: inline;
+    width: 45%;
+    color: black;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    height: fit-content;
+}
+
+.header_buttons_info:first-child {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.header_buttons_info p {
+    line-height: 35px;
+    text-align: right;
+    font-weight: 500;
+}
+
+main {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 70px;
+    height: fit-content;
+    display: block;
+    min-height: calc(100vh - 200px);
+}
+
+.page_header h2{
+    font-size: 25px;
+    line-height: 30px;
+    font-weight: 700;
+    width: fit-content;
+    padding-left: calc(18% + 5px);
+}
+
+.page {
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+    padding-bottom: 30px;
+}
+
+.left_menu {
+    background: white;
+    display: block;
+    width: 16%;
+    margin-right: 40px;
+    border: 1px solid #D0D0D0;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    height: fit-content;
+}
+
+.left_menu select {
+    padding-left: 15px;
+    display: block;
+    width: 85%;
+    margin: 0 auto;
+    height: 35px;
+    background: #FFFFFF;
+    border: 1px solid #D0D0D0;
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: 400;
+    margin-top: 10px;
+    appearance: none;
+    text-align: left;
+}
+
+.left_menu .profile_menu_each {
+    width: 85%;
+    margin: 0 auto;
+    height: 35px;
+    background: #FFFFFF;
+    border: 1px solid #FAC037;
+    margin-top: 10px;
+}
+
+.profile_menu_each.selected {
+    background: #FAC037;
+}
+
+.page_header.profile h2 {
+    width: 100%;
+    padding-left: 0;
+    text-align: center;
+}
+
+.left_menu .profile_menu_each a {
+    color: black;
+    display: block;
+    font-size: 18px;
+    line-height: 35px;
+    font-weight: 400;
+    appearance: none;
+    text-align: center;
+}
+
+.left_menu select:hover {
+    cursor: pointer;
+}
+
+.left_menu button {
+    display: block;
+    width: 85%;
+    margin: 0 auto;
+    height: 35px;
+    background: #FAC037;
+    border: 1px solid #FAC037;
+    border: none;
+    margin-top: 10px;
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: 400;
+}
+
+.page_content {
+    width: 82%;
+}
+
+.each_vacancy {
+    width: 100%;
+    display: block;
+    background: white;
+    border: 1px solid #D0D0D0;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+.vacancy_info {
+    display: flex;
+    width: calc(100% - 50px);
+    margin: 0 auto;
+}
+
+.vacancy_info h3 {
+    font-size: 20px;
+    line-height: 50px;
+}
+
+.left_vacancy_part {
+    width: 75%;
+}
+
+.price {
+    width: 20%;
+    text-align: center;
+    margin-left: 5%;
+}
+
+.each_vacancy_desceiption_text p {
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 400;
+}
+
+.each_vacancy_desceiption_text span {
+    color: #FAC037;
+}
+
+.each_vacancy_desceiption_text span:hover {
+    cursor: pointer;
+}
+
+.btns {
+    display: flex;
+    width: calc(20% + 60px);
+}
+
+.vacancy_submit {
+    width: calc(100% - 60px);
+    margin-left: 15px;
+    background: #FAC037;
+    height: 45px;
+}
+
+.vacancy_submit a {
+    line-height: 45px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.heart:hover {
+    cursor: pointer;
+}
+
+.date p {
+    line-height: 45px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.login_form {
+    width: 40%;
+    margin: 0 auto;
+    height: calc(100vh - 200px);
+}
+
+.login_form.register {
+    height: auto;
+    margin-bottom: 70px;
+}
+
+.login_form .page_header h2 {
+    padding-left: 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-top: 100px;
+}
+
+.login_form.register .page_header h2 {
+    padding-top: 0;
+}
+
+.login_form form {
+    width: 100%;
+}
+
+form input, form select, form textarea {
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid #D0D0D0;
+    box-sizing: border-box;
+    height: 50px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+form textarea {
+    height: 150px;
+    text-align: left;
+    padding-left: 15px;
+    padding-top: 15px;
+}
+
+form input::placeholder, form textarea::placeholder {
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+    text-align: center;
+}
+
+form textarea::placeholder {
+    line-height: 12 0px;
+    padding-top: 0;
+}
+
+form button {
+    width: 60%;
+    margin-left:20%;
+    background-color: #FAC037;
+    color: black;
+    font-size: 18px;
+    font-weight: 700;
+    height: 50px;
+    border: none;
+    outline: none;
+}
+
+.vacancy .page_content {
+    margin: 0 auto;
+}
+
+.page_header.back_link {
+    width: 82%;
+    margin: 0 auto;
+}
+
+.page_header.back_link a {
+    text-align: left;
+    text-decoration: underline;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 23px;
+    padding-left: 5px;
+}
+
+.vacancy .title {
+    padding-bottom: 10px;
+}
+
+.short_description {
+    padding-bottom: 10px;
+}
+
+.short_description_row p {
+    font-size: 18px;
+    line-height: 40px;
+}
+
+.short_description_row p span {
+    font-weight: 600;
+}
+
+.com_logo {
+    width: 20%;
+    margin-left: 5%;
+    height: fit-content;
+}
+
+.com_logo img {
+    width: 60px;
+    display: inherit;
+    margin: 0 auto;
+}
+
+.vacancy .each_vacancy_desceiption_text p {
+    padding-bottom: 15px;
+}
+
+.vacancy_info.img_slider {
+    display: block;
+    margin-bottom: 50px;
+    margin-top: 20px;
+}
+
+.img_row {
+    display: flex;
+    width: 100%;
+    vertical-align: bottom;
+}
+
+.img_row img {
+    width: calc(100% / 3);
+}
+
+.main_img {
+    width: calc(100% / 3 * 2);
+    height: fit-content;
+    display: block;
+}
+
+.main_img img {
+    vertical-align: bottom;
+    display: inline;
+    width: 100%;
+}
+
+.right_alingn_imgs {
+    width: calc(100% / 3);
+}
+
+.right_alingn_imgs img {
+    vertical-align: bottom;
+    display: inline;
+    width: 100%;
+}
+
+.page_content_profile_container {
+    display: flex;
+}
+
+.profile_container_img {
+    height: fit-content;
+    width: 15%;
+    margin-right: 40px;
+}
+
+.profile_container_img img {
+    width: 100%;
+    vertical-align: bottom;
+}
+
+.profile_container_form {
+    width: 80%;
+}
+
+.adaptive_menu {
+    display: none;
+}
+
+.adaptive_menu_info {
+    transform: translateY(-300px);
+}
+
+.adaptive_menu_info.element-show {
+    transform: translateY(0);
+    transition: all 1s;
+}
+
+.adaptive_menu_info.element-hiden {
+    transform: translateY(-300px);
+    transition: all 1s;
+}
+
+@media screen and (max-width: 1500px) {
+    .page_header h2 {
+        padding-left: calc(19% + 5px);
+    }
+
+    header, footer {
+        width: 90%;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .header_buttons {
+        width: 25%;
+        right: 5%;
+    }
+
+    .header_account {
+        right: 5%;
+    }
+
+    .login_form {
+        width: 50%;
+    }
+
+    main {
+        width: 90%;
+    }
+
+    .com_logo img {
+        width: 50px;
+    }
+}
+
+@media screen and (max-width: 1350px) {
+    .page_header h2 {
+        padding-left: calc(20% + 20px);
+    }
+
+    .header_buttons {
+        width: 30%;
+    }
+
+    .left_menu {
+        width: 18%;
+    }
+
+    .left_menu select {
+        padding-left: 10px;
+    }
+
+    .page_content {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    main {
+        width: 95%;
+    }
+
+    .left_menu {
+        width: 20%;
+        margin-right: 20px;
+    }
+
+    .each_vacancy_desceiption_text.left_vacancy_part {
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .header_buttons {
+        width: 35%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    .header_buttons {
+        width: 50%;
+    }
+
+    .page {
+        display: block;
+    }
+
+    .left_menu {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+
+    .left_menu select {
+        height: 50px;
+    }
+
+    .left_menu button {
+        height: 50px;
+    }
+
+    .page_content {
+        width: 100%;
+    }
+
+    .left_vacancy_part {
+        width: 70%;
+    }
+
+    .price {
+        width: 25%;
+        text-align: center;
+        margin-left: 5%;
+    }
+
+    .each_vacancy_desceiption_text.left_vacancy_part {
+        width: 95%;
+    }
+
+    .btns {
+        width: calc(30% + 60px);
+    }
+}
+
+@media screen and (max-width: 500px) {
+    main {
+        width: 95%;
+        margin-top: 35px;
+    }
+
+    .page_header h2 {
+        padding-left: 0;
+        font-size: 20px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .page {
+        display: block;
+    }
+
+    .left_menu {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+
+    .left_menu select {
+        width: 95%;
+        height: 50px;
+    }
+
+    .left_menu button {
+        width: 95%;
+        height: 50px;
+        font-weight: 600;
+    }
+
+    .page_content {
+        width: 100%;
+    }
+
+    .vacancy_info {
+        display: block;
+        width: calc(100% - 30px);
+        margin: 0 auto;
+    }
+
+    .left_vacancy_part {
+        width: 100%;
+    }
+
+    .price {
+        width: 100%;
+        text-align: left;
+        margin-left: 0;
+    }
+
+    .vacancy_info h3 {
+        font-size: 18px;
+        line-height: 40px;
+    }
+
+    .vacancy_info {
+        display: block;
+        width: calc(100% - 30px);
+        margin: 0 auto;
+    }
+
+    .each_vacancy_desceiption_text p {
+        font-size: 15px;
+        line-height: 25px;
+        font-weight: 400;
+    }
+
+    .btns {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    footer .header_logo {
+        width: 100%;
+        text-align: center;
+    }
+
+    .header_buttons {
+        display: none;
+    }
+
+    footer .header_buttons {
+        display: none;
+    }
+
+    .adaptive_menu {
+        display: block;
+        position: absolute;
+        right: 10%;
+        width: fit-content;
+    }
+
+    .adaptive_menu img {
+        vertical-align: bottom;
+    }
+
+    .adaptive_menu_info .header_buttons {
+        display: block;
+        padding-top: 20px;
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 65px;
+        background: #FAC037;
+    }
+
+    .adaptive_menu_info .header_buttons button {
+        display: block;
+        width: 60%;
+        margin-left: 20%;
+        background: black;
+        border: none;
+        color: white;
+        height: 35px;
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .header_buttons_info p {
+        font-size: 18px;
+        padding-right: 0%;
+        line-height: 30px;
+        text-align: center;
+        font-weight: 500;
+        padding-bottom: 10px;
+    }
+
+    .date p {
+        font-size: 16px;
+    }
+
+    .vacancy_submit a {
+        font-size: 16px;
+    }
+}
