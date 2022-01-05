@@ -1,0 +1,87 @@
+<div class="page_header ">
+    <h2>Актуальные предложения</h2>
+</div>
+
+<div class="page">
+    <form class="left_menu" action="/show_filtred_admin" method="post">
+        <select name="speciality" id="">
+            <option value="all">Все специальности</option>
+            <option value="1 Специальность">1 Специальность</option>
+            <option value="2 Специальность">2 Специальность</option>
+            <option value="3 Специальность">3 Специальность</option>
+            <option value="4 Специальность">4 Специальность</option>
+        </select>
+        <select name="voivodeship" id="">
+            <option value="all">Все воевудства</option>
+            <option value="1 Воевудство">1 Воевудство</option>
+            <option value="2 Воевудство">2 Воевудство</option>
+            <option value="3 Воевудство">3 Воевудство</option>
+            <option value="4 Воевудство">4 Воевудство</option>
+        </select>
+        <select name="city" id="">
+            <option value="all">Все города</option>
+            <option value="1 Город">1 Город</option>
+            <option value="2 Город">2 Город</option>
+            <option value="3 Город">3 Город</option>
+            <option value="4 Город">4 Город</option>
+        </select>
+        <select name="vacancy_price" id="">
+            <option value="all">Любая ЗП</option>
+            <option value="0 - 1000">до 1000</option>
+            <option value="1000 - 10000">от 1000 до 10000</option>
+            <option value="10000 - 30000">от 10000 до 30000</option>
+            <option value="30000 - x">от 30000</option>
+        </select>
+        <select name="work_type" id="">
+            <option value="all">Любой график</option>
+            <option value="1 График">1 График</option>
+            <option value="2 График">2 График</option>
+            <option value="3 График">3 График</option>
+            <option value="4 График">4 График</option>
+            <option value="5 График">5 График</option>
+        </select>
+        <select name="country" id="">
+            <option value="all">Любая страна</option>
+            <option value="1 Страна">1 Страна</option>
+            <option value="2 Страна">2 Страна</option>
+            <option value="3 Страна">3 Страна</option>
+            <option value="4 Страна">4 Страна</option>
+        </select>
+        <button type="submit">Найти</button>
+    </form>
+    <div class="page_content">
+        {{#each vacancies}}
+            <div class="each_vacancy">
+                <div class="vacancy_info">
+                    <div class="title left_vacancy_part">
+                        <h3>{{this.vacancy_title}}</h3>
+                    </div>
+                    <div class="price">
+                        <h3>{{this.vacancy_price}} ₽</h3>
+                    </div>
+                </div>
+                <div class="vacancy_info">
+                    <div class="each_vacancy_desceiption_text left_vacancy_part">
+                        <p>{{this.short_decription}}<a class="show_more" href="/vacancy/{{this.id}}">Показать больше</a></p>
+                    </div>
+                </div>
+                <div class="vacancy_info">
+                    <div class="date left_vacancy_part">
+                        <p>Дата публикации: {{this._date}}</p>
+                    </div>
+                    <div class="btns">
+                        <div class="heart unactive" onclick="delete_vacancy({{this.id}})">
+                            <img src="/static/img/delete.png" alt="">
+                        </div>
+                        <div class="heart unactive" onclick="edit_vacancy({{this.id}})">
+                            <img src="/static/img/edit.png" alt="">
+                        </div>
+                        <div class="vacancy_submit">
+                            <a href="/vacancy_responses/{{this.id}}">Отклики</a>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        {{/each}}
+    </div>
+</div>

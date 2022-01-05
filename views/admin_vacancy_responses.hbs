@@ -1,0 +1,39 @@
+<div class="page_header back_link">
+    <a href="/admin">< К списку проектов</a>
+</div>
+
+<div class="page vacancy">
+    <div class="page_content">
+        {{#each users}}
+            <div class="each_vacancy">
+                <div class="vacancy_info">
+                    <div class="title left_vacancy_part">
+                        <h3>{{this.full_name}}</h3>
+                    </div>
+                </div>
+                <div class="vacancy_info">
+                    <div class="each_vacancy_desceiption_text left_vacancy_part">
+                        <p>{{this.documents}}</p>
+                        <p>{{this.speciality}} - {{this.experience}} лет</p>
+                        <p>{{this.language_lvl}}</p>
+                    </div>
+                </div>
+
+                <div class="vacancy_info">
+                    <div class="date left_vacancy_part" style="opacity: 0;">
+                        <p>Дата публикации: {{this._date}}</p>
+                    </div>
+                    <div class="btns">
+                        <div class="heart unactive"  style="opacity: 0;">
+                            <img src="/static/img/delete.png" alt="">
+                        </div>
+                        <div class="vacancy_submit">
+                            <a href="/response/{{this.id}}" target="_blank">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        {{/each}}
+    </div>
+    
+</div>

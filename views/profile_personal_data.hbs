@@ -6,31 +6,50 @@
     <div class="page">
         <form class="left_menu">
             <div class="profile_menu_each selected">
-                <a href="/profile_personal_data">Профиль</a>
+                <a href="/profile_personal_data/{{user_id}}">Профиль</a>
             </div>
             <div class="profile_menu_each">
-                <a href="/profile_contacts">Обратная связь</a>
+                <a href="/profile_contacts/{{user_id}}">Обратная связь</a>
             </div>
             <div class="profile_menu_each">
-                <a href="/profile_favorites">Избранное</a>
+                <a href="/profile_favorites/{{user_id}}">Избранное</a>
             </div>
             <div class="profile_menu_each">
-                <a href="/profile_answers">Мои отклики</a>
+                <a href="/profile_answers/{{user_id}}">Мои отклики</a>
             </div>
         </form>
         <div class="page_content">
             <div class="page_content_profile_container">
-                <div class="profile_container_img">
-                    <img src="/static/img/test_avatar.png" alt="">
+                <div class="profile_container_img" onclick="upload_avatar()">
+                    <img src="{{user_info.avatar_path}}" alt="" id="avatar">
                 </div>
                 <div class="profile_container_form">
-                    <form action="">
-                        <input type="text" placeholder="Ваш email">
-                        <input type="text" placeholder="Документы для въезда в Польшу">
-                        <input type="text" placeholder="Специальность">
-                        <input type="text" placeholder="Опыт работы по специальности">
-                        <input type="text" placeholder="Уровень владения языком">
-                        <textarea name="qualities" id="" cols="30" rows="10" placeholder="Опишите ваши личный качества"></textarea>
+                    <form action="/profile_personal_data_edit/{{user_info.id}}" method="post" enctype="multipart/form-data">
+                        <input type="file" name="avatar" style="display: none;" id="avatar_uploader">
+                        <input name="email" type="email" placeholder="Ваш email" value="{{user_info.email}}">
+                        <select name="documents" id="">
+                            <option value="{{user_info.documents}}">{{user_info.documents}}</option>
+                            <option value="1 документ">1 документ</option>
+                            <option value="1 докумен">2 документ</option>
+                            <option value="1 документ">3 документ</option>
+                            <option value="1 документ">4 документ</option>
+                        </select>
+                        <select name="speciality" id="">
+                            <option value="{{user_info.speciality}}">{{user_info.speciality}}</option>
+                            <option value="1 Специальность">1 Специальность</option>
+                            <option value="2 Специальность">2 Специальность</option>
+                            <option value="3 Специальность">3 Специальность</option>
+                            <option value="4 Специальность">4 Специальность</option>
+                        </select>
+                        <input name="experience" type="number" placeholder="Опыт работы по специальности" value="{{user_info.experience}}">
+                        <select name="language_lvl" id="">
+                            <option value="{{user_info.language_lvl}}">{{user_info.language_lvl}}</option>
+                            <option value="1 Уровень">1 Уровень</option>
+                            <option value="2 Уровень">2 Уровень</option>
+                            <option value="3 Уровень">3 Уровень</option>
+                            <option value="4 Уровень">4 Уровень</option>
+                        </select>
+                        <textarea name="personal_qualities" id="" cols="30" rows="10" placeholder="Опишите ваши личные качества">{{user_info.personal_qualities}}</textarea>
                         <button type="submit">Сохранить</button>
                     </form>
                 </div>

@@ -1,0 +1,51 @@
+<div class="login_form register">
+    <div class="page_header">
+        <h2>Добавить вакансию</h2>
+    </div>
+    <form action="/admin_add_vacancy" method="post" enctype="multipart/form-data">
+        <input type="text" name="vacancy_title" placeholder="Заголовок">
+        <input type="number" name="vacancy_price" placeholder="ЗП">
+        <textarea name="vacancy_description" id="" cols="30" rows="10" placeholder="Описание"></textarea>
+        <select name="voivodeship" id="">
+            <option value="">Воевудство</option>
+            <option value="1 Воевудство">1 Воевудство</option>
+            <option value="2 Воевудство">2 Воевудство</option>
+            <option value="3 Воевудство">3 Воевудство</option>
+            <option value="4 Воевудство">4 Воевудство</option>
+        </select>
+        <select name="city" id="">
+            <option value="">Город</option>
+            <option value="1 Город">1 Город</option>
+            <option value="2 Город">2 Город</option>
+            <option value="3 Город">3 Город</option>
+            <option value="4 Город">4 Город</option>
+        </select>
+        <select name="work_type" id="">
+            <option value="0">График</option>
+            <option value="1 График">1 График</option>
+            <option value="2 График">2 График</option>
+            <option value="3 График">3 График</option>
+            <option value="4 График">4 График</option>
+            <option value="5 График">5 График</option>
+        </select>
+        <select name="speciality" id="">
+            <option value="">Специальность</option>
+            <option value="1 Специальность">1 Специальность</option>
+            <option value="2 Специальность">2 Специальность</option>
+            <option value="3 Специальность">3 Специальность</option>
+            <option value="4 Специальность">4 Специальность</option>
+        </select>
+        <select name="country" id="">
+            <option value="">Страна</option>
+            <option value="1 Страна">1 Страна</option>
+            <option value="2 Страна">2 Страна</option>
+            <option value="3 Страна">3 Страна</option>
+            <option value="4 Страна">4 Страна</option>
+        </select>
+        <label for="company_logo">Логотип компании</label>
+        <input type="file" name="company_logo">
+        <label for="company_logo">Фотографии рабочего пространства</label>
+        <input type="file" name="work_place_imgs" multiple>
+        <button type="submit">Опубликовать</button>
+    </form>
+</div>

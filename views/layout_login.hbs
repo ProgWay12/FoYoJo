@@ -10,15 +10,17 @@
 </head>
 <body>
     <header>
-        <div class="header_logo">
+        <div class="header_logo" onclick="window.location.href = '/'">
             <h1>Fo<span>Yo</span>Jo</h1>
         </div>
-        <div class="header_account" onclick="window.location.href = '/profile_personal_data'">
+        <div class="header_account" onclick="window.location.href = '/profile_personal_data/{{user_id}}'">
+            <!--
             <div class="account_logo">
                 <img src="/static/img/test_logo.png" alt="">
             </div>
+            -->
             <div class="account_info">
-                <p>Фамилия Имя</p>
+                <p>{{user_name}}</p>
             </div>
         </div>
     </header>

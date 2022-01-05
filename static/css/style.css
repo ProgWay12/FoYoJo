@@ -45,6 +45,10 @@ input {
     line-height: 35px;
 }
 
+.header_logo:hover {
+    cursor: pointer;
+}
+
 .header_logo {
     width: 10%;
 }
@@ -127,6 +131,10 @@ button:hover {
     border: none;
     outline: none;
     height: fit-content;
+}
+
+.header_buttons_info:hover {
+    cursor: pointer;
 }
 
 .header_buttons_info:first-child {
@@ -293,11 +301,20 @@ main {
     width: calc(20% + 60px);
 }
 
+.btns.responsed {
+    margin-left: 20%;
+    width: fit-content;
+}
+
 .vacancy_submit {
     width: calc(100% - 60px);
     margin-left: 15px;
     background: #FAC037;
     height: 45px;
+}
+
+.vacancy_submit:hover {
+    cursor: pointer;
 }
 
 .vacancy_submit a {
@@ -364,11 +381,12 @@ form textarea {
     padding-top: 15px;
 }
 
-form input::placeholder, form textarea::placeholder {
+form input::placeholder, form textarea::placeholder, label {
     font-size: 18px;
     font-weight: 700;
     color: black;
     text-align: center;
+    line-height: 30px;
 }
 
 form textarea::placeholder {
@@ -449,6 +467,7 @@ form button {
     display: flex;
     width: 100%;
     vertical-align: bottom;
+    flex-wrap: wrap;
 }
 
 .img_row img {
@@ -471,6 +490,27 @@ form button {
     width: calc(100% / 3);
 }
 
+.count_5 .right_alingn_imgs {
+    width: 100%;
+    display: flex;
+}
+
+.count_5 .right_alingn_imgs img {
+    width: 50%;
+}
+
+.count_4 .main_img {
+    width: 100%;
+}
+
+.count_2.img_row img {
+    width: 50%;
+}
+
+.count_1.main_img {
+    width: 100%;
+}
+
 .right_alingn_imgs img {
     vertical-align: bottom;
     display: inline;
@@ -485,6 +525,10 @@ form button {
     height: fit-content;
     width: 15%;
     margin-right: 40px;
+}
+
+.profile_container_img:hover {
+    cursor: pointer;
 }
 
 .profile_container_img img {

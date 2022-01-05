@@ -1,0 +1,33 @@
+<div class="page vacancy">
+    <div class="page_content">
+        <div class="page_content_profile_container">
+            <div class="profile_container_img" onclick="upload_avatar()">
+                <img src="{{user_info.avatar_path}}" alt="" id="avatar">
+            </div>
+            <div class="profile_container_form">
+                <form >
+                    <label for="email">Email</label>
+                    <input name="email" type="email" placeholder="Ваш email" value="{{user_info.email}}" disabled>
+                    <label for="email">Документ для въезда в Польшу</label>
+                    <input type="text" name="" id="" value="{{user_info.documents}}" disabled>
+                    <label for="email">Специальность</label>
+                    <input type="text" name="" id="" value="{{user_info.speciality}}" disabled>
+                    <label for="email">Опыт работы</label>
+                    <input name="experience" type="number" placeholder="Опыт работы по специальности" value="{{user_info.experience}}" disabled>
+                    <label for="email">Уровень владения языком</label>
+                    <input type="text" name="" id="" value="{{user_info.language_lvl}}" disabled>
+                    <label for="email">Персональные качества</label>
+                    <textarea name="personal_qualities" id="" cols="30" rows="10" disabled>{{user_info.personal_qualities}}</textarea>
+                    <label for="">Номер телефона для обратной связи</label>
+                    <input name="phone" type="text" placeholder="Номер телефона для обратной связи" value="{{user_info.phone}}" disabled>
+                    <label for="">Номер whatsapp</label>
+                    <input name="whatsapp_numb" type="text" placeholder="Номер whatsapp" value="{{user_info.whatsapp_numb}}" disabled>
+                    <label for="">Номер viber</label>
+                    <input name="viber_numb" type="text" placeholder="Номер viber" value="{{user_info.viber_numb}}" disabled>
+                    <label for="">Номер telegram</label>
+                    <input name="telegram_numb" type="text" placeholder="Номер telegram" value="{{user_info.telegram_numb}}" disabled>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

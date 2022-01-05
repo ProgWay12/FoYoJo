@@ -6,130 +6,49 @@
     <div class="page">
         <form class="left_menu">
             <div class="profile_menu_each">
-                <a href="/profile_personal_data">Профиль</a>
+                <a href="/profile_personal_data/{{user_id}}">Профиль</a>
             </div>
             <div class="profile_menu_each">
-                <a href="/profile_contacts">Обратная связь</a>
+                <a href="/profile_contacts/{{user_id}}">Обратная связь</a>
             </div>
             <div class="profile_menu_each selected">
-                <a href="/profile_favorites">Избранное</a>
+                <a href="/profile_favorites/{{user_id}}">Избранное</a>
             </div>
             <div class="profile_menu_each">
-                <a href="/profile_answers">Мои отклики</a>
+                <a href="/profile_answers/{{user_id}}">Мои отклики</a>
             </div>
         </form>
         <div class="page_content">
-            <div class="each_vacancy">
-                <div class="vacancy_info">
-                    <div class="title left_vacancy_part">
-                        <h3>Заголовок вакансии</h3>
-                    </div>
-                    <div class="price">
-                        <h3>30 000 ₽</h3>
-                    </div>
-                </div>
-                <div class="vacancy_info">
-                    <div class="each_vacancy_desceiption_text left_vacancy_part">
-                        <p>Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описание Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описан <a class="show_more" href="/vacancy">Показать больше</a></p>
-                    </div>
-                </div>
-                <div class="vacancy_info">
-                    <div class="date left_vacancy_part">
-                        <p>Дата публикации: 01.01.2001</p>
-                    </div>
-                    <div class="btns">
-                        <div class="heart active" onclick="choose_favorites(this)">
-                            <img src="/static/img/active_heart.png" alt="">
+            {{#each vacancies}}
+                <div class="each_vacancy">
+                    <div class="vacancy_info">
+                        <div class="title left_vacancy_part">
+                            <h3>{{this.vacancy_title}}</h3>
                         </div>
-                        <div class="vacancy_submit">
-                            <a  href="/vacancy">Откликнуться</a>
+                        <div class="price">
+                            <h3>{{this.vacancy_price}} ₽</h3>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="each_vacancy">
-                <div class="vacancy_info">
-                    <div class="title left_vacancy_part">
-                        <h3>Заголовок вакансии</h3>
-                    </div>
-                    <div class="price">
-                        <h3>30 000 ₽</h3>
-                    </div>
-                </div>
-                <div class="vacancy_info">
-                    <div class="each_vacancy_desceiption_text left_vacancy_part">
-                        <p>Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описание Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описан <a class="show_more" href="/vacancy"></a>>Показать больше</a></p>
-                    </div>
-                </div>
-                <div class="vacancy_info">
-                    <div class="date left_vacancy_part">
-                        <p>Дата публикации: 01.01.2001</p>
-                    </div>
-                    <div class="btns">
-                        <div class="heart active" onclick="choose_favorites(this)">
-                            <img src="/static/img/active_heart.png" alt="">
-                        </div>
-                        <div class="vacancy_submit">
-                            <a  href="/vacancy">Откликнуться</a>
+                    <div class="vacancy_info">
+                        <div class="each_vacancy_desceiption_text left_vacancy_part">
+                            <p>{{this.short_decription}}<a class="show_more" href="/vacancy/{{this.id}}">Показать больше</a></p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="each_vacancy">
-                <div class="vacancy_info">
-                    <div class="title left_vacancy_part">
-                        <h3>Заголовок вакансии</h3>
-                    </div>
-                    <div class="price">
-                        <h3>30 000 ₽</h3>
-                    </div>
-                </div>
-                <div class="vacancy_info">
-                    <div class="each_vacancy_desceiption_text left_vacancy_part">
-                        <p>Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описание Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описан <a class="show_more" href="/vacancy"></a>>Показать больше</a></p>
-                    </div>
-                </div>
-                <div class="vacancy_info">
-                    <div class="date left_vacancy_part">
-                        <p>Дата публикации: 01.01.2001</p>
-                    </div>
-                    <div class="btns">
-                        <div class="heart active" onclick="choose_favorites(this)">
-                            <img src="/static/img/active_heart.png" alt="">
+                    <div class="vacancy_info">
+                        <div class="date left_vacancy_part">
+                            <p>Дата публикации: {{this._date}}</p>
                         </div>
-                        <div class="vacancy_submit">
-                            <a  href="/vacancy">Откликнуться</a>
+                        <div class="btns">
+                            <div class="heart active" onclick="choose_favorites(this, {{this.id}})">
+                                <img src="/static/img/active_heart.png" alt="">
+                            </div>
+
+                            <div class="vacancy_submit">
+                                <a href="/vacancy/{{this.id}}">Откликнуться</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="each_vacancy">
-                <div class="vacancy_info">
-                    <div class="title left_vacancy_part">
-                        <h3>Заголовок вакансии</h3>
-                    </div>
-                    <div class="price">
-                        <h3>30 000 ₽</h3>
-                    </div>
-                </div>
-                <div class="vacancy_info">
-                    <div class="each_vacancy_desceiption_text left_vacancy_part">
-                        <p>Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описание Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описан <a class="show_more" href="/vacancy"></a>>Показать больше</a></p>
-                    </div>
-                </div>
-                <div class="vacancy_info">
-                    <div class="date left_vacancy_part">
-                        <p>Дата публикации: 01.01.2001</p>
-                    </div>
-                    <div class="btns">
-                        <div class="heart active" onclick="choose_favorites(this)">
-                            <img src="/static/img/active_heart.png" alt="">
-                        </div>
-                        <div class="vacancy_submit">
-                            <a  href="/vacancy">Откликнуться</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </div> 
+            {{/each}}
         </div>
     </div>

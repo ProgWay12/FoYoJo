@@ -1,5 +1,5 @@
 <div class="page_header back_link">
-    <a>< К списку проектов</a>
+    <a href="/">< К списку проектов</a>
 </div>
 
 <div class="page vacancy">
@@ -7,74 +7,168 @@
         <div class="each_vacancy">
             <div class="vacancy_info">
                 <div class="title left_vacancy_part">
-                    <h3>Заголовок вакансии</h3>
+                    <h3>{{vacancy_info.vacancy_title}}</h3>
                 </div>
                 <div class="price">
-                    <h3>30 000 ₽</h3>
                 </div>
             </div>
             <div class="vacancy_info">
                 <div class="left_vacancy_part">
                     <div class="short_description">
                         <div class="short_description_row">
-                            <p><span>Зарплата работника</span> - 5500 - 9000 руб/мес</p>
+                            <p><span>Зарплата работника</span> - {{vacancy_info.vacancy_price}} Z&#322;/мес</p>
                         </div>
                         <div class="short_description_row">
-                            <p><span>Воевудство</span> - воевудство</p>
+                            <p><span>Воевудство</span> - {{vacancy_info.voivodeship}}</p>
                         </div>
                         <div class="short_description_row">
-                            <p><span>Город</span> - город</p>
+                            <p><span>Город</span> - {{vacancy_info.city}}</p>
                         </div>
                         <div class="short_description_row">
-                            <p><span>График</span> - график</p>
+                            <p><span>График</span> - {{vacancy_info.work_type}}</p>
                         </div>
                         <div class="short_description_row">
-                            <p><span>Специальность</span> - специальность</p>
+                            <p><span>Специальность</span> - {{vacancy_info.speciality}}</p>
                         </div>
                     </div>
                 </div>
-                <div class="com_logo">
-                    <img src="/static/img/test_com_logo.png" alt="">
-                </div>
+                {{#if is_null_logo}}
+                    <div class="com_logo" style="display: none;">
+                        <img src="/static/img/test_com_logo.png" alt="">
+                    </div>
+                {{else}}
+                    <div class="com_logo">
+                        <img src="{{vacancy_info.company_logo}}" alt="">
+                    </div>
+                {{/if}}
+                
             </div>
             
             <div class="vacancy_info">
                 <div class="each_vacancy_desceiption_text left_vacancy_part">
-                    <p>Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описание Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описан </p>
-                    <p>Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описание Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описан </p>
-                    <p>Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описание Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описан </p>
-                    <p>Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описание Краткое описание Краткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описаниеКраткое описан </p>
+                    {{#each vacancy_info.vacancy_description}}
+                        <p>{{this}}</p>
+                    {{/each}}
                 </div>
             </div>
 
-            <div class="vacancy_info img_slider">
-                <div class="img_row">
-                    <div class="main_img">
-                        <img src="/static/img/test_img_!.png" alt="" id="main_img">
-                    </div>
-                    <div class="right_alingn_imgs">
-                        <img src="/static/img/test_img_2.png" alt="" onclick="change_main_img(this)">
-                        <img src="/static/img/test_img_3.png" alt="" onclick="change_main_img(this)">
-                    </div>
+            {{#if is_null_work_place_imgs}}
+                <div class="vacancy_info img_slider" style="display: none;">
                 </div>
-                <div class="img_row">
-                    <img src="/static/img/test_img_4.png" alt="" onclick="change_main_img(this)">
-                    <img src="/static/img/test_img_5.png" alt="" onclick="change_main_img(this)">
-                    <img src="/static/img/test_img_6.png" alt="" onclick="change_main_img(this)">
-                </div>
-            </div>
+            {{else}}
+                {{#if count_6}}
+                    <div class="vacancy_info img_slider">
+                        <div class="img_row">
+                            <div class="main_img">
+                                <img src="{{img_block.main_img}}" alt="" id="main_img">
+                            </div>
+                            <div class="right_alingn_imgs">
+                                {{#each img_block.sec_block}}
+                                    <img src="{{this}}" alt="" onclick="change_main_img(this)">
+                                {{/each}}
+                            </div>
+                        </div>
+                        <div class="img_row">
+                            {{#each img_block.thid_block}}
+                                <img src="{{this}}" alt="" onclick="change_main_img(this)">
+                            {{/each}}
+                        </div>
+                    </div>
+                {{else}}
+                    {{#if count_5}}
+                        <div class="vacancy_info img_slider">
+                            <div class="img_row count_5">
+                                <div class="right_alingn_imgs">
+                                    {{#each img_block.sec_block}}
+                                        <img src="{{this}}" alt="" onclick="change_main_img(this)">
+                                    {{/each}}
+                                </div>
+                            </div>
+                            <div class="img_row">
+                                {{#each img_block.thid_block}}
+                                    <img src="{{this}}" alt="" onclick="change_main_img(this)">
+                                {{/each}}
+                            </div>
+                        </div>
+                    {{else}}
+                        {{#if count_4}}
+                            <div class="vacancy_info img_slider">
+                                <div class="img_row">
+                                    {{#each img_block.thid_block}}
+                                        <img src="{{this}}" alt="" onclick="change_main_img(this)">
+                                    {{/each}}
+                                </div>
+                                <div class="img_row count_4">
+                                    <div class="main_img">
+                                        <img src="{{img_block.main_img}}" alt="" id="main_img">
+                                    </div>
+                                </div>
+                            </div>
+                        {{else}}
+                            {{#if count_3}}
+                                <div class="vacancy_info img_slider">
+                                    <div class="img_row">
+                                        <div class="main_img">
+                                            <img src="{{img_block.main_img}}" alt="" id="main_img">
+                                        </div>
+                                        <div class="right_alingn_imgs">
+                                            {{#each img_block.sec_block}}
+                                                <img src="{{this}}" alt="" onclick="change_main_img(this)">
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                </div>
+                            {{else}}
+                                {{#if count_2}}
+                                    <div class="vacancy_info img_slider">
+                                        <div class="img_row count_2">
+                                            {{#each img_block.thid_block}}
+                                                <img src="{{this}}" alt="" onclick="change_main_img(this)">
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                {{else}}
+                                    {{#if count_1}}
+                                        <div class="vacancy_info img_slider">
+                                            <div class="main_img count_1">
+                                                <img src="{{img_block.main_img}}" alt="" id="main_img">
+                                            </div>
+                                        </div>
+                                    {{/if}}
+                                {{/if}}
+                            {{/if}}
+                        {{/if}}
+                    {{/if}}
+                {{/if}}
+            {{/if}}
+            
 
             <div class="vacancy_info">
                 <div class="date left_vacancy_part">
-                    <p>Дата публикации: 01.01.2001</p>
+                    <p>Дата публикации: {{vacancy_info._date}}</p>
                 </div>
-                <div class="btns">
-                    <div class="heart unactive" onclick="choose_favorites(this)">
-                        <img src="/static/img/unactive_heart.png" alt="">
-                    </div>
-                    <div class="vacancy_submit">
-                        <a href="">Откликнуться</a>
-                    </div>
+                <div class="btns {{#if is_responsed}}
+                        responsed
+                    {{/if}}">
+                    {{#if is_fav}}
+                        <div class="heart active" onclick="choose_favorites(this, {{vacancy_info.id}})">
+                            <img src="/static/img/active_heart.png" alt="">
+                        </div>
+                    {{else}}
+                        <div class="heart unactive" onclick="choose_favorites(this, {{vacancy_info.id}})">
+                            <img src="/static/img/unactive_heart.png" alt="">
+                        </div>
+                    {{/if}}
+                    {{#if is_responsed}}
+                        <div class="vacancy_submit" style="display: none;">
+                            <a>Откликнуться</a>
+                        </div>
+                    {{else}}
+                        <div class="vacancy_submit" onclick="create_response(this, {{vacancy_info.id}})">
+                            <a>Откликнуться</a>
+                        </div>
+                    {{/if}}
+                    
                 </div>
             </div>
         </div>
