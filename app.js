@@ -133,12 +133,21 @@ app.get("/", (req, res) => {
                                         })
                                     }
                                 })
-        
-                                res.render("main.hbs", {
-                                    layout: "layout_login",
-                                    user_name: req.session.username,
-                                    user_id: req.session.user_id,
-                                    vacancies: vacancies.reverse()
+                                
+                                pool.query("select * from cities", (err_cities, cities) => {
+                                    if (err_cities) {
+                                        console.log(err_cities)
+                                        res.sendStatus(502)
+                                    } else{
+                                        res.render("main.hbs", {
+                                            layout: "layout_login",
+                                            user_name: req.session.username,
+                                            user_id: req.session.user_id,
+                                            vacancies: vacancies.reverse(),
+                                            cities: cities
+                                        })
+
+                                    }
                                 })
                             }
                         })
@@ -156,9 +165,17 @@ app.get("/", (req, res) => {
                     })
                 })
 
-                res.render("main.hbs", {
-                    layout: "layout_not_login",
-                    vacancies: vacancies.reverse()
+                pool.query("select * from cities", (err_cities, cities) => {
+                    if (err_cities) {
+                        console.log(err_cities)
+                        res.sendStatus(502)
+                    } else {
+                        res.render("main.hbs", {
+                            layout: "layout_not_login",
+                            vacancies: vacancies.reverse(),
+                            cities: cities
+                        })  
+                    }
                 })
             } 
         }
@@ -184,10 +201,18 @@ app.post("/login", jsonParser, (req, res) => {
                     req.session.logged_in = true
                     req.session.username = results[0].full_name
                     req.session.user_id = results[0].id
-                    res.redirect("/")
+                    res.json({
+                        err: 'none'
+                    })
+                } else {
+                    res.json({
+                        err: 'pass'
+                    })
                 }
             } else {
-                res.redirect("/login")
+                res.json({
+                    err: 'login'
+                })
             }
             
         }
@@ -213,15 +238,44 @@ app.post("/registration", (req, res) => {
     const whatsapp_numb = req.body.whatsapp_numb
     const viber_numb = req.body.viber_numb
     const telegram_numb = req.body.telegram_numb
-    pool.query("insert into users (email, pass, full_name, phone, documents, speciality, experience, language_lvl, personal_qualities, whatsapp_numb, viber_numb, telegram_numb) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [email, password, full_name, phone, documents, speciality, experience, language_lvl, personal_qualities, whatsapp_numb, viber_numb, telegram_numb], (err, results) => {
-                if (err) {
-                    console.log(err)
-                    res.sendStatus(502)
-                } else {
-                    res.redirect("/login")
-                }
-            })
+    pool.query("select * from users where email = ?", [email] , (email_test_err, email_test) => {
+        if (email_test_err) {
+            console.log(email_test_err)
+            res.sendStatus(502)
+        } else {
+            if (typeof(email_test[0]) == "undefined") {
+                pool.query("select * from users where phone = ?", [phone], (phone_test_err, phone_test) => {
+                    if (phone_test_err) {
+                        console.log(phone_test_err)
+                        res.sendStatus(502)
+                    } else {
+                        if (typeof(phone_test[0]) == "undefined") {
+                            pool.query("insert into users (email, pass, full_name, phone, documents, speciality, experience, language_lvl, personal_qualities, whatsapp_numb, viber_numb, telegram_numb) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                                [email, password, full_name, phone, documents, speciality, experience, language_lvl, personal_qualities, whatsapp_numb, viber_numb, telegram_numb], (err, results) => {
+                                    if (err) {
+                                        console.log(err)
+                                        res.sendStatus(502)
+                                    } else {
+                                        res.json({
+                                            err: "none"
+                                        })
+                                    }
+                                })
+
+                        } else {
+                            res.json({
+                                err: 'phone'
+                            })
+                        }
+                    }
+                })
+            } else {
+                res.json({
+                    err: 'email'
+                })
+            }
+        }
+    })
 })
 
 app.get("/vacancy/:id", (req, res) => {
@@ -449,28 +503,39 @@ app.get("/profile_favorites/:id", (req, res) => {
                 result.forEach((elem, i) => {
                     ids.push(elem.vacancy_id)
                 })
-                var pool_string = 'select * from vacancies where '
-                for (var i = 0; i < ids.length; i++) {
-                    if (i != ids.length - 1) {
-                        pool_string += `id = ${ids[i]} or `
-                    } else {
-                        pool_string += `id = ${ids[i]}`
-                    }
-                }
 
-                pool.query(pool_string, (err1, result1) => {
-                    if (err1) {
-                        res.sendStatus(502)
-                        console.log(err1)
-                    } else {
-                        res.render("profile_favorites.hbs", {
-                            layout: "layout_login",
-                            user_name: req.session.username,
-                            user_id: req.session.user_id,
-                            vacancies: result1.reverse()
-                        })
+                if (ids.length > 0) {
+                    var pool_string = 'select * from vacancies where '
+                    for (var i = 0; i < ids.length; i++) {
+                        if (i != ids.length - 1) {
+                            pool_string += `id = ${ids[i]} or `
+                        } else {
+                            pool_string += `id = ${ids[i]}`
+                        }
                     }
-                })
+
+                    pool.query(pool_string, (err1, result1) => {
+                        if (err1) {
+                            res.sendStatus(502)
+                            console.log(err1)
+                        } else {
+                            res.render("profile_favorites.hbs", {
+                                layout: "layout_login",
+                                user_name: req.session.username,
+                                user_id: req.session.user_id,
+                                vacancies: result1.reverse()
+                            })
+                        }
+                    })
+                } else {
+                    res.render("profile_favorites.hbs", {
+                        layout: "layout_login",
+                        user_name: req.session.username,
+                        user_id: req.session.user_id,
+                        vacancies: []
+                    })
+                }
+                
             }
         })
         
@@ -491,28 +556,39 @@ app.get("/profile_answers/:id", (req, res) => {
                 result.forEach((elem, i) => {
                     ids.push(elem.vacancy_id)
                 })
-                var pool_string = 'select * from vacancies where '
-                for (var i = 0; i < ids.length; i++) {
-                    if (i != ids.length - 1) {
-                        pool_string += `id = ${ids[i]} or `
-                    } else {
-                        pool_string += `id = ${ids[i]}`
-                    }
-                }
 
-                pool.query(pool_string, (err1, result1) => {
-                    if (err1) {
-                        res.sendStatus(502)
-                        console.log(err1)
-                    } else {
-                        res.render("profile_answers.hbs", {
-                            layout: "layout_login",
-                            user_name: req.session.username,
-                            user_id: req.session.user_id,
-                            vacancies: result1.reverse()
-                        })
+                if (ids.length > 0) {
+                    var pool_string = 'select * from vacancies where '
+                    for (var i = 0; i < ids.length; i++) {
+                        if (i != ids.length - 1) {
+                            pool_string += `id = ${ids[i]} or `
+                        } else {
+                            pool_string += `id = ${ids[i]}`
+                        }
                     }
-                })
+
+                    pool.query(pool_string, (err1, result1) => {
+                        if (err1) {
+                            res.sendStatus(502)
+                            console.log(err1)
+                        } else {
+                            res.render("profile_answers.hbs", {
+                                layout: "layout_login",
+                                user_name: req.session.username,
+                                user_id: req.session.user_id,
+                                vacancies: result1.reverse()
+                            })
+                        }
+                    })
+                } else {
+                    res.render("profile_answers.hbs", {
+                        layout: "layout_login",
+                        user_name: req.session.username,
+                        user_id: req.session.user_id,
+                        vacancies: []
+                    })
+                }
+                
             }
         })
         
@@ -688,12 +764,20 @@ app.get("/filtred/:speciality/:voivodeship/:city/:vacancy_price/:work_type/:coun
                                         })
                                     }
                                 })
-
-                                res.render("main.hbs", {
-                                    layout: "layout_login",
-                                    user_name: req.session.username,
-                                    user_id: req.session.user_id,
-                                    vacancies: vacancies.reverse()
+                                
+                                pool.query("select * from cities", (err_cities, cities) => {
+                                    if (err_cities) {
+                                        console.log(err_cities)
+                                        res.sendStatus(502)
+                                    } else {
+                                        res.render("main.hbs", {
+                                            layout: "layout_login",
+                                            user_name: req.session.username,
+                                            user_id: req.session.user_id,
+                                            vacancies: vacancies.reverse(),
+                                            cities: cities
+                                        })
+                                    }
                                 })
                             }
                         })
@@ -718,6 +802,11 @@ app.get("/filtred/:speciality/:voivodeship/:city/:vacancy_price/:work_type/:coun
             } 
         }
     })
+})
+
+app.get("/logout", (req, res) => {
+    req.session.logged_in = false
+    res.redirect("/login")
 })
 
 //* adminboard
@@ -755,9 +844,12 @@ app.get("/admin", (req, res) => {
             console.log(err)
         } else {
             if (req.session.admin_logged_in) {
-                res.render("admin_main.hbs", {
-                    layout: "layout_admin",
-                    vacancies: result.reverse()
+                pool.query("select * from cities", (err_cities, cities) => {
+                    res.render("admin_main.hbs", {
+                        layout: "layout_admin",
+                        vacancies: result.reverse(),
+                        cities: cities
+                    })
                 })
             } else {
                 res.redirect("/admin_login")
@@ -768,8 +860,16 @@ app.get("/admin", (req, res) => {
 
 app.get("/admin_add_vacancy", (req, res) => {
     if (req.session.admin_logged_in) {
-        res.render("admin_add_vacancy.hbs", {
-            layout: "layout_admin"
+        pool.query("select * from cities", (err, cities) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(502)
+            } else {
+                res.render("admin_add_vacancy.hbs", {
+                    layout: "layout_admin",
+                    cities: cities
+                })
+            }
         })
     } else {
         res.redirect("/admin_login")
@@ -832,11 +932,24 @@ app.post("/admin_add_vacancy", jsonParser, (req, res) => {
     const vacancy_title = req.body.vacancy_title
     const vacancy_price = req.body.vacancy_price
     const voivodeship = req.body.voivodeship
-    const city = req.body.city
+
     const work_type = req.body.work_type
     const speciality = req.body.speciality
     var country = req.body.country
-    var date = `${new Date().getDate()}.${new Date().getMonth()}.${new Date().getFullYear()}`
+
+    if (String(new Date().getDate()).length == 1) {
+        var date = `0${String(new Date().getDate())}`
+    } else {
+        var date = `${String(new Date().getDate())}`
+    }
+
+    if (String(new Date().getMonth() + 1).length == 1) {
+        var month = `0${String(new Date().getMonth() + 1)}`
+    } else {
+        var month = `${String(new Date().getMonth() + 1)}`
+    }
+
+    var date = `${date}.${month}.${new Date().getFullYear()}`
 
     if (typeof(req.files.company_logo) != "undefined") {
         var company_logo = '/' + req.files.company_logo[0].path
@@ -856,7 +969,48 @@ app.post("/admin_add_vacancy", jsonParser, (req, res) => {
     } else {
         var work_place_imgs_paths = ''
     }
-    pool.query("insert into vacancies (vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, _date, country, company_logo, work_place_imgs_paths) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+
+    if (req.body.city == "new_city") {
+        var city = req.body.new_city
+        pool.query("select * from cities where city = ?", [city], (err_check_city, check_city) => {
+            if (err_check_city) {
+                console.log(err_check_city)
+                res.sendStatus(502)
+            } else {
+                if (typeof(check_city[0]) == "undefined") {
+                    pool.query("insert into cities (city) values (?)", [req.body.new_city], (err_adding, adding) => {
+                        if (err_adding) {
+                            console.log(err_adding)
+                            res.sendStatus(502)
+                        } else {
+                            pool.query("insert into vacancies (vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, _date, country, company_logo, work_place_imgs_paths) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                                [vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, date, country, company_logo, work_place_imgs_paths], (err, results) => {
+                                    if (err) {
+                                        console.log(err)
+                                        res.sendStatus(502)
+                                    } else {
+                                        res.redirect("/admin")
+                                    }
+                                })
+                        }
+                    })
+                } else {
+                    city = check_city[0].city
+                    pool.query("insert into vacancies (vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, _date, country, company_logo, work_place_imgs_paths) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        [vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, date, country, company_logo, work_place_imgs_paths], (err, results) => {
+                            if (err) {
+                                console.log(err)
+                                res.sendStatus(502)
+                            } else {
+                                res.redirect("/admin")
+                            }
+                        })
+                }
+            }
+        })
+    } else {
+        var city = req.body.city
+        pool.query("insert into vacancies (vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, _date, country, company_logo, work_place_imgs_paths) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, date, country, company_logo, work_place_imgs_paths], (err, results) => {
                 if (err) {
                     console.log(err)
@@ -865,6 +1019,9 @@ app.post("/admin_add_vacancy", jsonParser, (req, res) => {
                     res.redirect("/admin")
                 }
             })
+    }
+
+    
 })
 
 app.post("/delete_vacancy", jsonParser, (req, res) => {
@@ -885,10 +1042,19 @@ app.get("/edit_vacancy/:id", (req, res) => {
                 console.log(err)
                 res.sendStatus(502)
             } else {
-                res.render("admin_edit_vacancy.hbs", {
-                    layout: "layout_admin",
-                    vacancy: result[0]
+                pool.query("select * from cities", (err_cities, cities) => {
+                    if (err_cities) {
+                        console.log(err_cities)
+                        res.sendStatus(502)
+                    } else{
+                        res.render("admin_edit_vacancy.hbs", {
+                            layout: "layout_admin",
+                            vacancy: result[0],
+                            cities: cities
+                        })
+                    }
                 })
+                
             }
         })
     } else {
@@ -1110,10 +1276,19 @@ app.get("/admin_filtred/:speciality/:voivodeship/:city/:vacancy_price/:work_type
                     result = filtred_arr
                 }
 
-                res.render("admin_main.hbs", {
-                    layout: "layout_admin",
-                    vacancies: result.reverse()
+                pool.query("select * from cities", (cities_err, cities) => {
+                    if (cities_err) {
+                        console.log(cities_err)
+                        res.sendStatus(502)
+                    } else {
+                        res.render("admin_main.hbs", {
+                            layout: "layout_admin",
+                            vacancies: result.reverse(),
+                            cities: cities
+                        })
+                    }
                 })
+                
             }
         })
     } else {

@@ -8,17 +8,28 @@
         <textarea name="vacancy_description" id="" cols="30" rows="10" placeholder="Описание"  >{{vacancy.vacancy_description}}</textarea>
         <select name="voivodeship" id="">
             <option value="{{vacancy.voivodeship}}">{{vacancy.voivodeship}}</option>
-            <option value="1 Воевудство">1 Воевудство</option>
-            <option value="2 Воевудство">2 Воевудство</option>
-            <option value="3 Воевудство">3 Воевудство</option>
-            <option value="4 Воевудство">4 Воевудство</option>
+            <option value="Варминьско-Мазурское">Варминьско-Мазурское</option>
+            <option value="Великопольское">Великопольское</option>
+            <option value="Западно-Поморское">Западно-Поморское</option>
+            <option value="Куявско-Поморское">Куявско-Поморское</option>
+            <option value="Лодзинское">Лодзинское</option>
+            <option value="Люблинское">Люблинское</option>
+            <option value="Любушское">Любушское</option>
+            <option value="Мазовецкое">Мазовецкое</option>
+            <option value="Малопольское">Малопольское</option>
+            <option value="Нижнесилезское">Нижнесилезское</option>
+            <option value="Опольское">Опольское</option>
+            <option value="Подкарпатское">Подкарпатское</option>
+            <option value="Подляское">Подляское</option>
+            <option value="Поморское">Поморское</option>
+            <option value="Свентокшиское">Свентокшиское</option>
+            <option value="Силезское">Силезское</option>
         </select>
         <select name="city" id="">
             <option value="{{vacancy.city}}">{{vacancy.city}}</option>
-            <option value="1 Город">1 Город</option>
-            <option value="2 Город">2 Город</option>
-            <option value="3 Город">3 Город</option>
-            <option value="4 Город">4 Город</option>
+            {{#each cities}}
+                <option value="{{this.city}}">{{this.city}}</option>
+            {{/each}}
         </select>
         <select name="work_type" id="">
             <option value="{{vacancy.work_type}}">{{vacancy.work_type}}</option>

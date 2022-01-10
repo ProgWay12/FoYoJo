@@ -102,4 +102,12 @@ function showFile(e) {
     }
 }
 
+function add_new_city(selector) {
+    if (selector.value == "new_city") {
+        document.getElementById("new_city").classList.remove("hiden")
+    } else {
+        document.getElementById("new_city").classList.add("hiden")
+    }
+}
+
 document.getElementById('avatar_uploader').addEventListener('change', showFile, false);

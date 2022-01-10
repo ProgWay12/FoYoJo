@@ -212,6 +212,15 @@ main {
     background: #FAC037;
 }
 
+.profile_menu_each.logout_btn {
+    background: #B61B00;
+    border: 1px solid #B61B00;
+}
+
+.profile_menu_each.logout_btn a {
+    color: white!important;
+}
+
 .page_header.profile h2 {
     width: 100%;
     padding-left: 0;
@@ -556,6 +565,10 @@ form button {
 .adaptive_menu_info.element-hiden {
     transform: translateY(-300px);
     transition: all 1s;
+}
+
+.hiden {
+    display: none;
 }
 
 @media screen and (max-width: 1500px) {

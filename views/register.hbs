@@ -2,33 +2,33 @@
     <div class="page_header">
         <h2>Регистрация</h2>
     </div>
-    <form action="/registration" method="post">
-        <input type="text" name="full_name" placeholder="ФИО">
-        <input type="email" name="email" placeholder="Ваш email">
-        <input type="tel" name="phone" placeholder="Ваш телефон">
-        <select name="documents" id="">
+    <form id="reg_form">
+        <input type="text" name="full_name" placeholder="ФИО" required>
+        <input type="email" name="email" placeholder="Ваш email" required>
+        <input type="tel" name="phone" placeholder="Ваш телефон" required>
+        <select name="documents" id="" required>
             <option value="">Документы для въезда в Польшу</option>
             <option value="1 документ">1 документ</option>
             <option value="2 докумен">2 документ</option>
             <option value="3 документ">3 документ</option>
             <option value="4 документ">4 документ</option>
         </select>
-        <select name="speciality" id="">
+        <select name="speciality" id="" required>
             <option value="">Специальность</option>
             <option value="1 Специальность">1 Специальность</option>
             <option value="2 Специальность">2 Специальность</option>
             <option value="3 Специальность">3 Специальность</option>
             <option value="4 Специальность">4 Специальность</option>
         </select>
-        <input type="number" name="experience" placeholder="Опыт работы по специальности">
-        <select name="language_lvl" id="">
+        <input type="number" name="experience" placeholder="Опыт работы по специальности" required>
+        <select name="language_lvl" id="" required>
             <option value="">Уровень владения языком </option>
             <option value="1 Уровень">1 Уровень</option>
             <option value="2 Уровень">2 Уровень</option>
             <option value="3 Уровень">3 Уровень</option>
             <option value="4 Уровень">4 Уровень</option>
         </select>
-        <textarea name="personal_qualities" id="" cols="30" rows="10" placeholder="Опишите ваши личный качества"></textarea>
+        <textarea name="personal_qualities" id="" cols="30" rows="10" placeholder="Опишите ваши личный качества" required></textarea>
         <input type="tel" name="whatsapp_numb" placeholder="Номер whatsapp">
         <input type="tel" name="viber_numb" placeholder="Номер viber">
         <input type="tel" name="telegram_numb" placeholder="Номер telegram">
@@ -36,3 +36,4 @@
         <button type="submit">Зарегестрироваться</button>
     </form>
 </div>
+<script src="/static/js/reg_from.js"></script>
