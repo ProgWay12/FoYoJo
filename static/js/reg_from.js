@@ -7,7 +7,7 @@ document.getElementById("reg_form").onsubmit = (e) => {
         email: document.getElementById("reg_form").querySelector("input[name='email']").value,
         phone: document.getElementById("reg_form").querySelector("input[name='phone']").value,
         documents: document.getElementById("reg_form").querySelector("select[name='documents']").value,
-        speciality: document.getElementById("reg_form").querySelector("select[name='speciality']").value,
+        speciality: document.getElementById("reg_form").querySelector("input[name='speciality']").value,
         experience: document.getElementById("reg_form").querySelector("input[name='experience']").value,
         language_lvl: document.getElementById("reg_form").querySelector("select[name='language_lvl']").value,
         personal_qualities: document.getElementById("reg_form").querySelector("textarea[name='personal_qualities']").value,

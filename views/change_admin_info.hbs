@@ -1,0 +1,10 @@
+<div class="login_form">
+    <div class="page_header ">
+        <h2>Изменить пароль</h2>
+    </div>
+    <form action="/update_admin" method="post">
+        <input type="email" name="email" placeholder="Новый email" value="{{admin.email}}">
+        <input type="text" name="password" placeholder="Новый пароль" value="{{admin.pass}}">
+        <button type="submit">Обновить</button>
+    </form>
+</div>

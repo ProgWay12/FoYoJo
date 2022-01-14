@@ -103,10 +103,42 @@ function showFile(e) {
 }
 
 function add_new_city(selector) {
-    if (selector.value == "new_city") {
+    if (selector.value == "new") {
         document.getElementById("new_city").classList.remove("hiden")
     } else {
         document.getElementById("new_city").classList.add("hiden")
+    }
+}
+
+function add_new_schedule(selector) {
+    if (selector.value == "new") {
+        document.getElementById("new_schedule").classList.remove("hiden")
+    } else {
+        document.getElementById("new_schedule").classList.add("hiden")
+    }
+}
+
+function add_new_speciality(selector) {
+    if (selector.value == "new") {
+        document.getElementById("new_speciality").classList.remove("hiden")
+    } else {
+        document.getElementById("new_speciality").classList.add("hiden")
+    }
+}
+
+function add_new_speciality(selector) {
+    if (selector.value == "new") {
+        document.getElementById("new_speciality").classList.remove("hiden")
+    } else {
+        document.getElementById("new_speciality").classList.add("hiden")
+    }
+}
+
+function add_new_country(selector) {
+    if (selector.value == "new") {
+        document.getElementById("new_country").classList.remove("hiden")
+    } else {
+        document.getElementById("new_country").classList.add("hiden")
     }
 }
 

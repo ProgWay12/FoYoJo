@@ -28,29 +28,24 @@
                 </div>
                 <div class="profile_container_form">
                     <form action="/profile_personal_data_edit/{{user_info.id}}" method="post" enctype="multipart/form-data">
-                        <input type="file" name="avatar" style="display: none;" id="avatar_uploader">
+                        <input type="file" name="avatar" style="display: none;" id="avatar_uploader" value="{{user_info.avatar_path}}">
                         <input name="email" type="email" placeholder="Ваш email" value="{{user_info.email}}">
                         <select name="documents" id="">
                             <option value="{{user_info.documents}}">{{user_info.documents}}</option>
-                            <option value="1 документ">1 документ</option>
-                            <option value="1 докумен">2 документ</option>
-                            <option value="1 документ">3 документ</option>
-                            <option value="1 документ">4 документ</option>
+                            <option value="Виза">Виза</option>
+                            <option value="Безвиз">Безвиз</option>
+                            <option value="Карта побыта">Карта побыта</option>
                         </select>
-                        <select name="speciality" id="">
-                            <option value="{{user_info.speciality}}">{{user_info.speciality}}</option>
-                            <option value="1 Специальность">1 Специальность</option>
-                            <option value="2 Специальность">2 Специальность</option>
-                            <option value="3 Специальность">3 Специальность</option>
-                            <option value="4 Специальность">4 Специальность</option>
-                        </select>
+                        <input type="text" name="speciality" placeholder="Специальность" value="{{user_info.speciality}}">
                         <input name="experience" type="number" placeholder="Опыт работы по специальности" value="{{user_info.experience}}">
                         <select name="language_lvl" id="">
                             <option value="{{user_info.language_lvl}}">{{user_info.language_lvl}}</option>
-                            <option value="1 Уровень">1 Уровень</option>
-                            <option value="2 Уровень">2 Уровень</option>
-                            <option value="3 Уровень">3 Уровень</option>
-                            <option value="4 Уровень">4 Уровень</option>
+                            <option value="Начальный">Начальный</option>
+                            <option value="Ниже среднего">Ниже среднего</option>
+                            <option value="Средний">Средний</option>
+                            <option value="Выше среднего">Выше среднего</option>
+                            <option value="Продвинутый">Продвинутый</option>
+                            <option value="Профессиональный уровень">Профессиональный уровень</option>
                         </select>
                         <textarea name="personal_qualities" id="" cols="30" rows="10" placeholder="Опишите ваши личные качества">{{user_info.personal_qualities}}</textarea>
                         <button type="submit">Сохранить</button>
@@ -59,5 +54,4 @@
             </div>
         </div>
     </div>
-
 

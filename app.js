@@ -62,11 +62,15 @@ Server: remotemysql.com
 Port: 3306
 
 tables:
-users (email (longtext), pass (longtext), )
-admins
-vacancies
-favorites (user_id (int), vacancy_id (int) )
-responses (user_id (int), vacancy_id (int) )
+users (email (longtext), pass (longtext), ) +
+admins +
+vacancies +
+favorites (user_id (int), vacancy_id (int) ) +
+responses (user_id (int), vacancy_id (int) ) +
+cities (city (longtext)) +
+schedules (schedule_type (longtext)) +
+specialities (speciality (longtext)) +
+countries (country (longtext))
 */
 
 app.use(session({
@@ -75,12 +79,23 @@ app.use(session({
 	saveUninitialized: true
 }));
 
+
+/*
+const pool = mysql.createPool({
+    host: "localhost",
+    port: 3306,
+    user: "yanukd5w_foyojo",
+    database: "yanukd5w_foyojo",
+    password: "t*LLrXU1"   
+});
+*/
+
 const pool = mysql.createPool({
     host: "remotemysql.com",
     port: 3306,
     user: "p4caLCC1oc",
     database: "p4caLCC1oc",
-    password: "lAr3BmacL0"   
+    password: "ys3fXpumpL"   
 });
 
 app.get("/", (req, res) => {
@@ -139,14 +154,37 @@ app.get("/", (req, res) => {
                                         console.log(err_cities)
                                         res.sendStatus(502)
                                     } else{
-                                        res.render("main.hbs", {
-                                            layout: "layout_login",
-                                            user_name: req.session.username,
-                                            user_id: req.session.user_id,
-                                            vacancies: vacancies.reverse(),
-                                            cities: cities
+                                        pool.query("select * from countries", (err1, countries) => {
+                                            if (err1) {
+                                                console.log(err1)
+                                                res.sendStatus(502)
+                                            } else {
+                                                pool.query("select * from specialities", (err2, specialities) => {
+                                                    if (err2) {
+                                                        console.log(err2)
+                                                        res.sendStatus(502)
+                                                    } else {
+                                                        pool.query("select * from schedules", (err3, schedules) => {
+                                                            if (err3) {
+                                                                console.log(err3)
+                                                                res.sendStatus(502)
+                                                            } else {
+                                                                res.render("main.hbs", {
+                                                                    layout: "layout_login",
+                                                                    user_name: req.session.username,
+                                                                    user_id: req.session.user_id,
+                                                                    vacancies: vacancies.reverse(),
+                                                                    cities: cities,
+                                                                    countries: countries,
+                                                                    specialities: specialities,
+                                                                    schedules: schedules
+                                                                })
+                                                            }
+                                                        })
+                                                    }
+                                                })
+                                            }
                                         })
-
                                     }
                                 })
                             }
@@ -170,11 +208,36 @@ app.get("/", (req, res) => {
                         console.log(err_cities)
                         res.sendStatus(502)
                     } else {
-                        res.render("main.hbs", {
-                            layout: "layout_not_login",
-                            vacancies: vacancies.reverse(),
-                            cities: cities
-                        })  
+                        pool.query("select * from countries", (err1, countries) => {
+                            if (err1) {
+                                console.log(err1)
+                                res.sendStatus(502)
+                            } else {
+                                pool.query("select * from specialities", (err2, specialities) => {
+                                    if (err2) {
+                                        console.log(err2)
+                                        res.sendStatus(502)
+                                    } else {
+                                        pool.query("select * from schedules", (err3, schedules) => {
+                                            if (err3) {
+                                                console.log(err3)
+                                                res.sendStatus(502)
+                                            } else {
+                                                res.render("main.hbs", {
+                                                    layout: "layout_not_login",
+                                                    vacancies: vacancies.reverse(),
+                                                    cities: cities,
+                                                    countries: countries,
+                                                    specialities: specialities,
+                                                    schedules: schedules
+                                                }) 
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                         
                     }
                 })
             } 
@@ -418,11 +481,19 @@ app.get("/profile_personal_data/:id", (req, res) => {
                     if (String(result[0].avatar_path).length == 0 || result[0].avatar_path == null) {
                         result[0].avatar_path = "/static/img/test_avatar.png"
                     }
-                    res.render("profile_personal_data.hbs", {
-                        layout: "layout_login",
-                        user_name: req.session.username,
-                        user_id: req.session.user_id,
-                        user_info: result[0]
+                    pool.query("select * from specialities", (err1, specialities) => {
+                        if (err1) {
+                            console.log(err1)
+                            res.sendStatus(502)
+                        } else {
+                            res.render("profile_personal_data.hbs", {
+                                layout: "layout_login",
+                                user_name: req.session.username,
+                                user_id: req.session.user_id,
+                                user_info: result[0],
+                                specialities: specialities
+                            })
+                        }
                     })
                 } else {
                     res.redirect("/login")
@@ -435,22 +506,33 @@ app.get("/profile_personal_data/:id", (req, res) => {
 })
 
 app.post("/profile_personal_data_edit/:id", jsonParser, (req, res) => {
-    var file = req.files.avatar[0].path
-    var avatar_path = "/" + file
     const email = req.body.email
     const documents = req.body.documents
     const speciality = req.body.speciality
     const experience = req.body.experience
     const language_lvl = req.body.language_lvl
     const personal_qualities = req.body.personal_qualities
-    pool.query("update users set email = ?, documents = ?, speciality = ?, experience = ?, language_lvl = ?, personal_qualities = ?, avatar_path = ? where id = ?", [email, documents, speciality, experience, language_lvl, personal_qualities, avatar_path, req.params.id], (err, result) => {
-        if (err) {
-            console.log(err)
-            res.sendStatus(502)
-        } else {
-            res.redirect(`/profile_personal_data/${req.params.id}`)
-        }
-    })
+    if (typeof(req.files.avatar) != "undefined") {
+        var file = req.files.avatar[0].path
+        var avatar_path = "/" + file
+        pool.query("update users set email = ?, documents = ?, speciality = ?, experience = ?, language_lvl = ?, personal_qualities = ?, avatar_path = ? where id = ?", [email, documents, speciality, experience, language_lvl, personal_qualities, avatar_path, req.params.id], (err, result) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(502)
+            } else {
+                res.redirect(`/profile_personal_data/${req.params.id}`)
+            }
+        })
+    } else {
+        pool.query("update users set email = ?, documents = ?, speciality = ?, experience = ?, language_lvl = ?, personal_qualities = ? where id = ?", [email, documents, speciality, experience, language_lvl, personal_qualities, req.params.id], (err, result) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(502)
+            } else {
+                res.redirect(`/profile_personal_data/${req.params.id}`)
+            }
+        })
+    }
 })
 
 app.get("/profile_contacts/:id", (req, res) => {
@@ -770,12 +852,36 @@ app.get("/filtred/:speciality/:voivodeship/:city/:vacancy_price/:work_type/:coun
                                         console.log(err_cities)
                                         res.sendStatus(502)
                                     } else {
-                                        res.render("main.hbs", {
-                                            layout: "layout_login",
-                                            user_name: req.session.username,
-                                            user_id: req.session.user_id,
-                                            vacancies: vacancies.reverse(),
-                                            cities: cities
+                                        pool.query("select * from countries", (err1, countries) => {
+                                            if (err1) {
+                                                console.log(err1)
+                                                res.sendStatus(502)
+                                            } else {
+                                                pool.query("select * from specialities", (err2, specialities) => {
+                                                    if (err2) {
+                                                        console.log(err2)
+                                                        res.sendStatus(502)
+                                                    } else {
+                                                        pool.query("select * from schedules", (err3, schedules) => {
+                                                            if (err3) {
+                                                                console.log(err3)
+                                                                res.sendStatus(502)
+                                                            } else {
+                                                                res.render("main.hbs", {
+                                                                    layout: "layout_login",
+                                                                    user_name: req.session.username,
+                                                                    user_id: req.session.user_id,
+                                                                    vacancies: vacancies.reverse(),
+                                                                    cities: cities,
+                                                                    countries: countries,
+                                                                    specialities: specialities,
+                                                                    schedules: schedules
+                                                                })
+                                                            }
+                                                        })
+                                                    }
+                                                })
+                                            }
                                         })
                                     }
                                 })
@@ -795,10 +901,44 @@ app.get("/filtred/:speciality/:voivodeship/:city/:vacancy_price/:work_type/:coun
                     })
                 })
 
-                res.render("main.hbs", {
-                    layout: "layout_not_login",
-                    vacancies: vacancies.reverse()
+                pool.query("select * from cities", (err_cities, cities) => {
+                    if (err_cities) {
+                        console.log(err_cities)
+                        res.sendStatus(502)
+                    } else {
+                        pool.query("select * from countries", (err1, countries) => {
+                            if (err1) {
+                                console.log(err1)
+                                res.sendStatus(502)
+                            } else {
+                                pool.query("select * from specialities", (err2, specialities) => {
+                                    if (err2) {
+                                        console.log(err2)
+                                        res.sendStatus(502)
+                                    } else {
+                                        pool.query("select * from schedules", (err3, schedules) => {
+                                            if (err3) {
+                                                console.log(err3)
+                                                res.sendStatus(502)
+                                            } else {
+                                                res.render("main.hbs", {
+                                                    layout: "layout_not_login",
+                                                    vacancies: vacancies.reverse(),
+                                                    cities: cities,
+                                                    countries: countries,
+                                                    specialities: specialities,
+                                                    schedules: schedules
+                                                })
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    }
                 })
+
+                
             } 
         }
     })
@@ -827,6 +967,7 @@ app.post("/admin_login", jsonParser, (req, res) => {
         } else {
             if (typeof(results[0]) != "undefined") {
                 if (password == results[0].pass) {
+                    req.session.admin_id = results[0].id
                     req.session.admin_logged_in = true
                     res.redirect("/admin")
                 }
@@ -845,10 +986,34 @@ app.get("/admin", (req, res) => {
         } else {
             if (req.session.admin_logged_in) {
                 pool.query("select * from cities", (err_cities, cities) => {
-                    res.render("admin_main.hbs", {
-                        layout: "layout_admin",
-                        vacancies: result.reverse(),
-                        cities: cities
+                    pool.query("select * from countries", (err1, countries) => {
+                        if (err1) {
+                            console.log(err1)
+                            res.sendStatus(502)
+                        } else {
+                            pool.query("select * from specialities", (err2, specialities) => {
+                                if (err2) {
+                                    console.log(err2)
+                                    res.sendStatus(502)
+                                } else {
+                                    pool.query("select * from schedules", (err3, schedules) => {
+                                        if (err3) {
+                                            console.log(err3)
+                                            res.sendStatus(502)
+                                        } else {
+                                            res.render("admin_main.hbs", {
+                                                layout: "layout_admin",
+                                                vacancies: result.reverse(),
+                                                cities: cities,
+                                                countries: countries,
+                                                specialities: specialities,
+                                                schedules: schedules
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
                     })
                 })
             } else {
@@ -865,9 +1030,33 @@ app.get("/admin_add_vacancy", (req, res) => {
                 console.log(err)
                 res.sendStatus(502)
             } else {
-                res.render("admin_add_vacancy.hbs", {
-                    layout: "layout_admin",
-                    cities: cities
+                pool.query("select * from countries", (err1, countries) => {
+                    if (err1) {
+                        console.log(err1)
+                        res.sendStatus(502)
+                    } else {
+                        pool.query("select * from specialities", (err2, specialities) => {
+                            if (err2) {
+                                console.log(err2)
+                                res.sendStatus(502)
+                            } else {
+                                pool.query("select * from schedules", (err3, schedules) => {
+                                    if (err3) {
+                                        console.log(err3)
+                                        res.sendStatus(502)
+                                    } else {
+                                        res.render("admin_add_vacancy.hbs", {
+                                            layout: "layout_admin",
+                                            cities: cities,
+                                            countries: countries,
+                                            specialities: specialities,
+                                            schedules: schedules
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    }
                 })
             }
         })
@@ -933,10 +1122,6 @@ app.post("/admin_add_vacancy", jsonParser, (req, res) => {
     const vacancy_price = req.body.vacancy_price
     const voivodeship = req.body.voivodeship
 
-    const work_type = req.body.work_type
-    const speciality = req.body.speciality
-    var country = req.body.country
-
     if (String(new Date().getDate()).length == 1) {
         var date = `0${String(new Date().getDate())}`
     } else {
@@ -970,48 +1155,92 @@ app.post("/admin_add_vacancy", jsonParser, (req, res) => {
         var work_place_imgs_paths = ''
     }
 
-    if (req.body.city == "new_city") {
-        var city = req.body.new_city
+    if (req.body.city == "new") {
+        var city = `${String(req.body.new_city)[0].toLocaleUpperCase()}${String(req.body.new_city).slice(1).toLocaleLowerCase()}`
         pool.query("select * from cities where city = ?", [city], (err_check_city, check_city) => {
             if (err_check_city) {
                 console.log(err_check_city)
                 res.sendStatus(502)
             } else {
                 if (typeof(check_city[0]) == "undefined") {
-                    pool.query("insert into cities (city) values (?)", [req.body.new_city], (err_adding, adding) => {
+                    pool.query("insert into cities (city) values (?)", [city], (err_adding, adding) => {
                         if (err_adding) {
                             console.log(err_adding)
                             res.sendStatus(502)
-                        } else {
-                            pool.query("insert into vacancies (vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, _date, country, company_logo, work_place_imgs_paths) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                                [vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, date, country, company_logo, work_place_imgs_paths], (err, results) => {
-                                    if (err) {
-                                        console.log(err)
-                                        res.sendStatus(502)
-                                    } else {
-                                        res.redirect("/admin")
-                                    }
-                                })
                         }
                     })
-                } else {
-                    city = check_city[0].city
-                    pool.query("insert into vacancies (vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, _date, country, company_logo, work_place_imgs_paths) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                        [vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, date, country, company_logo, work_place_imgs_paths], (err, results) => {
-                            if (err) {
-                                console.log(err)
-                                res.sendStatus(502)
-                            } else {
-                                res.redirect("/admin")
-                            }
-                        })
                 }
             }
         })
     } else {
         var city = req.body.city
-        pool.query("insert into vacancies (vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, _date, country, company_logo, work_place_imgs_paths) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, date, country, company_logo, work_place_imgs_paths], (err, results) => {
+    }
+
+    if (req.body.work_type == "new") {
+        var schedule = `${String(req.body.new_schedule)[0].toLocaleUpperCase()}${String(req.body.new_schedule).slice(1).toLocaleLowerCase()}`
+        pool.query("select * from schedules where schedule_type = ?", [schedule], (err_check_city, check_city) => {
+            if (err_check_city) {
+                console.log(err_check_city)
+                res.sendStatus(502)
+            } else {
+                if (typeof(check_city[0]) == "undefined") {
+                    pool.query("insert into schedules (schedule_type) values (?)", [schedule], (err_adding, adding) => {
+                        if (err_adding) {
+                            console.log(err_adding)
+                            res.sendStatus(502)
+                        }
+                    })
+                }
+            }
+        })
+    } else {
+        var schedule = req.body.work_type
+    }
+
+    if (req.body.speciality == "new") {
+        var speciality = `${String(req.body.new_speciality)[0].toLocaleUpperCase()}${String(req.body.new_speciality).slice(1).toLocaleLowerCase()}`
+        pool.query("select * from specialities where speciality = ?", [speciality], (err_check_city, check_city) => {
+            if (err_check_city) {
+                console.log(err_check_city)
+                res.sendStatus(502)
+            } else {
+                if (typeof(check_city[0]) == "undefined") {
+                    pool.query("insert into specialities (speciality) values (?)", [speciality], (err_adding, adding) => {
+                        if (err_adding) {
+                            console.log(err_adding)
+                            res.sendStatus(502)
+                        }
+                    })
+                }
+            }
+        })
+    } else {
+        var speciality = req.body.speciality
+    }
+
+    if (req.body.country == "new") {
+        var country = `${String(req.body.new_country)[0].toLocaleUpperCase()}${String(req.body.new_country).slice(1).toLocaleLowerCase()}`
+        pool.query("select * from countries where country = ?", [country], (err_check_city, check_city) => {
+            if (err_check_city) {
+                console.log(err_check_city)
+                res.sendStatus(502)
+            } else {
+                if (typeof(check_city[0]) == "undefined") {
+                    pool.query("insert into countries (country) values (?)", [country], (err_adding, adding) => {
+                        if (err_adding) {
+                            console.log(err_adding)
+                            res.sendStatus(502)
+                        }
+                    })
+                }
+            }
+        })
+    } else {
+        var country = req.body.country
+    }
+
+    pool.query("insert into vacancies (vacancy_title, vacancy_price, vacancy_description, voivodeship, city, work_type, speciality, short_decription, _date, country, company_logo, work_place_imgs_paths) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [vacancy_title, vacancy_price, vacancy_description, voivodeship, city, schedule, speciality, short_decription, date, country, company_logo, work_place_imgs_paths], (err, results) => {
                 if (err) {
                     console.log(err)
                     res.sendStatus(502)
@@ -1019,9 +1248,7 @@ app.post("/admin_add_vacancy", jsonParser, (req, res) => {
                     res.redirect("/admin")
                 }
             })
-    }
 
-    
 })
 
 app.post("/delete_vacancy", jsonParser, (req, res) => {
@@ -1047,10 +1274,34 @@ app.get("/edit_vacancy/:id", (req, res) => {
                         console.log(err_cities)
                         res.sendStatus(502)
                     } else{
-                        res.render("admin_edit_vacancy.hbs", {
-                            layout: "layout_admin",
-                            vacancy: result[0],
-                            cities: cities
+                        pool.query("select * from countries", (err1, countries) => {
+                            if (err1) {
+                                console.log(err1)
+                                res.sendStatus(502)
+                            } else {
+                                pool.query("select * from specialities", (err2, specialities) => {
+                                    if (err2) {
+                                        console.log(err2)
+                                        res.sendStatus(502)
+                                    } else {
+                                        pool.query("select * from schedules", (err3, schedules) => {
+                                            if (err3) {
+                                                console.log(err3)
+                                                res.sendStatus(502)
+                                            } else {
+                                                res.render("admin_edit_vacancy.hbs", {
+                                                    layout: "layout_admin",
+                                                    vacancy: result[0],
+                                                    cities: cities,
+                                                    countries: countries,
+                                                    specialities: specialities,
+                                                    schedules: schedules
+                                                })
+                                            }
+                                        })
+                                    }
+                                })
+                            }
                         })
                     }
                 })
@@ -1281,11 +1532,36 @@ app.get("/admin_filtred/:speciality/:voivodeship/:city/:vacancy_price/:work_type
                         console.log(cities_err)
                         res.sendStatus(502)
                     } else {
-                        res.render("admin_main.hbs", {
-                            layout: "layout_admin",
-                            vacancies: result.reverse(),
-                            cities: cities
+                        pool.query("select * from countries", (err1, countries) => {
+                            if (err1) {
+                                console.log(err1)
+                                res.sendStatus(502)
+                            } else {
+                                pool.query("select * from specialities", (err2, specialities) => {
+                                    if (err2) {
+                                        console.log(err2)
+                                        res.sendStatus(502)
+                                    } else {
+                                        pool.query("select * from schedules", (err3, schedules) => {
+                                            if (err3) {
+                                                console.log(err3)
+                                                res.sendStatus(502)
+                                            } else {
+                                                res.render("admin_main.hbs", {
+                                                    layout: "layout_admin",
+                                                    vacancies: result.reverse(),
+                                                    cities: cities,
+                                                    countries: countries,
+                                                    specialities: specialities,
+                                                    schedules: schedules
+                                                })
+                                            }
+                                        })
+                                    }
+                                })
+                            }
                         })
+                        
                     }
                 })
                 
@@ -1294,6 +1570,35 @@ app.get("/admin_filtred/:speciality/:voivodeship/:city/:vacancy_price/:work_type
     } else {
         res.redirect("/admin_login")
     }
+})
+
+app.get("/update_admin", (req, res) => {
+    if (req.session.admin_logged_in) {
+        pool.query("select * from admins where id = ?", [req.session.admin_id], (err, admin) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(502)
+            } else {
+                res.render("change_admin_info.hbs", {
+                    layout: 'layout_admin',
+                    admin: admin[0]
+                })
+            }
+        })
+    } else {
+        res.redirect("/admin_login")
+    }
+})
+
+app.post("/update_admin", jsonParser, (req, res) => {
+    pool.query("update admins set email = ?, pass = ? where id = ?", [req.body.email, req.body.password, req.session.admin_id], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.sendStatus(502)
+        } else {
+            res.redirect("/update_admin")
+        }
+    })
 })
 
 app.listen(PORT, () => {

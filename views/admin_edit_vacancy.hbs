@@ -33,25 +33,21 @@
         </select>
         <select name="work_type" id="">
             <option value="{{vacancy.work_type}}">{{vacancy.work_type}}</option>
-            <option value="1 График">1 График</option>
-            <option value="2 График">2 График</option>
-            <option value="3 График">3 График</option>
-            <option value="4 График">4 График</option>
-            <option value="5 График">5 График</option>
+            {{#each schedules}}
+                <option value="{{this.schedule_type}}">{{this.schedule_type}}</option>
+            {{/each}}
         </select>
         <select name="speciality" id="">
             <option value="{{vacancy.speciality}}">{{vacancy.speciality}}</option>
-            <option value="1 Специальность">1 Специальность</option>
-            <option value="2 Специальность">2 Специальность</option>
-            <option value="3 Специальность">3 Специальность</option>
-            <option value="4 Специальность">4 Специальность</option>
+            {{#each specialities}}
+                <option value="{{this.speciality}}">{{this.speciality}}</option>
+            {{/each}}
         </select>
         <select name="country" id="">
             <option value="{{vacancy.country}}">{{vacancy.country}}</option>
-            <option value="1 Страна">1 Страна</option>
-            <option value="2 Страна">2 Страна</option>
-            <option value="3 Страна">3 Страна</option>
-            <option value="4 Страна">4 Страна</option>
+            {{#each countries}}
+                <option value="{{this.country}}">{{this.country}}</option>
+            {{/each}}
         </select>
         <button type="submit">Опубликовать</button>
     </form>

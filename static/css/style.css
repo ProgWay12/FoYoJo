@@ -72,6 +72,10 @@ input {
     display: flex;
 }
 
+.header_buttons.admin {
+    width: 30%;
+}
+
 .header_account {
     position: absolute;
     right: 10%;

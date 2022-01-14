@@ -13,6 +13,7 @@
         <div class="header_buttons">
             <button onclick="window.location.href = '/admin_add_vacancy'">Добавить вакансию</button>
             <button onclick="window.location.href = '/admin'">Все вакансии</button>
+            <button onclick="window.location.href = '/update_admin'">Настройки</button>
             <div class="header_buttons_info">
                 <p>mail@mail.ru</p>
             </div>
@@ -28,12 +29,15 @@
         <div class="adaptive_menu" onclick="show_menu(this)">
             <img src="/static/img/adaptive_menu.png" alt="">
         </div>
-        <div class="header_buttons">
+        <div class="header_buttons admin">
             <div onclick="window.location.href = '/admin_add_vacancy'" class="header_buttons_info">
                 <p>Новая вакансия</p>
             </div>
             <div onclick="window.location.href = '/admin'" class="header_buttons_info">
                 <p>Все вакансии</p>
+            </div>
+            <div onclick="window.location.href = '/update_admin'" class="header_buttons_info">
+                <p>Настройки</p>
             </div>
         </div>
     </header>
