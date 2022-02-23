@@ -1,9 +1,10 @@
-<div class="page_header back_link">
-    <a href="/">< К списку объявлений</a>
-</div>
+
 
 <div class="page vacancy">
     <div class="page_content">
+        <div class="page_header back_link">
+            <a href="/">< К списку объявлений</a>
+        </div>
         <div class="each_vacancy">
             <div class="vacancy_info">
                 <div class="title left_vacancy_part">
@@ -56,88 +57,41 @@
                 <div class="vacancy_info img_slider" style="display: none;">
                 </div>
             {{else}}
-                {{#if count_6}}
+                {{#if count_1}}
                     <div class="vacancy_info img_slider">
-                        <div class="img_row">
-                            <div class="main_img">
-                                <img src="{{img_block.main_img}}" alt="" id="main_img">
-                            </div>
-                            <div class="right_alingn_imgs">
-                                {{#each img_block.sec_block}}
-                                    <img src="{{this}}" alt="" onclick="change_main_img(this)">
-                                {{/each}}
-                            </div>
-                        </div>
-                        <div class="img_row">
-                            {{#each img_block.thid_block}}
-                                <img src="{{this}}" alt="" onclick="change_main_img(this)">
-                            {{/each}}
+                        <div class="main_img count_1">
+                            <img src="{{img_block.main_img}}" alt="" id="main_img">
                         </div>
                     </div>
                 {{else}}
-                    {{#if count_5}}
-                        <div class="vacancy_info img_slider">
-                            <div class="img_row count_5">
-                                <div class="right_alingn_imgs">
-                                    {{#each img_block.sec_block}}
-                                        <img src="{{this}}" alt="" onclick="change_main_img(this)">
-                                    {{/each}}
-                                </div>
+                    {{#if count_2}}
+                        <div class="vacancy_info img_slider_main">
+                            <div class="arrow hiden">
+                                <img src="/static/img/left.png" alt="" onclick="show_prev()">
                             </div>
-                            <div class="img_row">
-                                {{#each img_block.thid_block}}
-                                    <img src="{{this}}" alt="" onclick="change_main_img(this)">
+                            <div class="sliger_body" style="width: 100%;">
+                                {{#each img_block.imgs}}
+                                    <img src="{{this}}" alt="" onclick="show_img(this)">
                                 {{/each}}
+                            </div>
+                            <div class="arrow hiden">
+                                <img src="/static/img/right.png" style="float: right;" alt="" onclick="show_next()">
                             </div>
                         </div>
                     {{else}}
-                        {{#if count_4}}
-                            <div class="vacancy_info img_slider">
-                                <div class="img_row">
-                                    {{#each img_block.thid_block}}
-                                        <img src="{{this}}" alt="" onclick="change_main_img(this)">
-                                    {{/each}}
-                                </div>
-                                <div class="img_row count_4">
-                                    <div class="main_img">
-                                        <img src="{{img_block.main_img}}" alt="" id="main_img">
-                                    </div>
-                                </div>
+                        <div class="vacancy_info img_slider_main">
+                            <div class="arrow">
+                                <img src="/static/img/left.png" alt="" onclick="show_prev()">
                             </div>
-                        {{else}}
-                            {{#if count_3}}
-                                <div class="vacancy_info img_slider">
-                                    <div class="img_row">
-                                        <div class="main_img">
-                                            <img src="{{img_block.main_img}}" alt="" id="main_img">
-                                        </div>
-                                        <div class="right_alingn_imgs">
-                                            {{#each img_block.sec_block}}
-                                                <img src="{{this}}" alt="" onclick="change_main_img(this)">
-                                            {{/each}}
-                                        </div>
-                                    </div>
-                                </div>
-                            {{else}}
-                                {{#if count_2}}
-                                    <div class="vacancy_info img_slider">
-                                        <div class="img_row count_2">
-                                            {{#each img_block.thid_block}}
-                                                <img src="{{this}}" alt="" onclick="change_main_img(this)">
-                                            {{/each}}
-                                        </div>
-                                    </div>
-                                {{else}}
-                                    {{#if count_1}}
-                                        <div class="vacancy_info img_slider">
-                                            <div class="main_img count_1">
-                                                <img src="{{img_block.main_img}}" alt="" id="main_img">
-                                            </div>
-                                        </div>
-                                    {{/if}}
-                                {{/if}}
-                            {{/if}}
-                        {{/if}}
+                            <div class="sliger_body">
+                                {{#each img_block.imgs}}
+                                    <img src="{{this}}" alt="" onclick="show_img(this)">
+                                {{/each}}
+                            </div>
+                            <div class="arrow">
+                                <img src="/static/img/right.png" style="float: right;" alt="" onclick="show_next()">
+                            </div>
+                        </div>
                     {{/if}}
                 {{/if}}
             {{/if}}
@@ -174,3 +128,5 @@
         </div>
     </div>
 </div>
+
+<script src="/static/js/vacancy.js"></script>

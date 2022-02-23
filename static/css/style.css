@@ -1,12 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+@keyframes go_out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        
+    }
+}
+
+@keyframes go_in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 *, body {
     margin: 0;
     padding: 0;
+    overflow: auto;
 }
 
 body {
-    background: #F6F6F6;
+    background: #D6E6EE;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -25,10 +45,10 @@ br {
 header, footer {
     position: relative;
     display: flex;
-    background-color: #FAC037;
-    width: 80%;
-    padding-left: 10%;
-    padding-right: 10%;
+    background-color: #2D4054;
+    width: 85%;
+    padding-left: 7.5%;
+    padding-right: 7.5%;
     padding-bottom: 15px;
     padding-top: 15px;
     font-family: 'Roboto', sans-serif;
@@ -45,12 +65,19 @@ input {
     line-height: 35px;
 }
 
+.header_logo img {
+    height: 100%;
+    display: block;
+    vertical-align: bottom;
+}
+
 .header_logo:hover {
     cursor: pointer;
 }
 
-.header_logo {
-    width: 10%;
+.header_logo {    
+    width: fit-content;
+    height: 35px;
 }
 
 .header_logo.form_page {
@@ -67,7 +94,7 @@ input {
 
 .header_buttons {
     position: absolute;
-    right: 10%;
+    right: 7.5%;
     width: 22%;
     display: flex;
 }
@@ -100,10 +127,11 @@ input {
 }
 
 .account_info p {
-    line-height: 40px;
+    line-height: 35px;
     padding-left: 15px;
     font-weight: bold;
     font-size: 20px;
+    color: white;
 }
 
 header button:first-child {
@@ -115,7 +143,7 @@ header button {
     display: inline;
     width: 45%;
     color: white;
-    background-color: black;
+    background-color: #E26218;
     font-size: 18px;
     border: none;
     outline: none;
@@ -130,11 +158,24 @@ button:hover {
 .header_buttons_info {
     display: inline;
     width: 45%;
-    color: black;
+    color: white;
     font-size: 20px;
     border: none;
     outline: none;
     height: fit-content;
+}
+
+.menu_point {    
+    width: fit-content;
+    padding-left: 2%;
+}
+
+.menu_point a {
+    text-align: left;
+    line-height: 35px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .header_buttons_info:hover {
@@ -153,12 +194,16 @@ button:hover {
 }
 
 main {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
-    margin-top: 70px;
+    padding-top: 0;
     height: fit-content;
     display: block;
-    min-height: calc(100vh - 200px);
+    min-height: calc(100vh - 130px);
+}
+
+.page_header.white_header {
+    color: white;
 }
 
 .page_header h2{
@@ -166,21 +211,40 @@ main {
     line-height: 30px;
     font-weight: 700;
     width: fit-content;
-    padding-left: calc(18% + 5px);
+    padding-left: 5px;
+    margin-bottom: 15px;
 }
 
 .page {
     display: flex;
     width: 100%;
-    margin-top: 30px;
-    padding-bottom: 30px;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: calc(100vh - 130px);
 }
+
+.left_part {
+    padding-top: 70px;
+    padding-bottom: 30px;
+    width: 24%;
+    background-color: #2D4054;
+    scrollbar-color: #E26218;
+}
+
+.left_part::-webkit-scrollbar { width: 10px;}
+.left_part::-webkit-scrollbar-button {  background-color: #2D4054; }
+.left_part::-webkit-scrollbar-track {  background-color: #2D4054;}
+.left_part::-webkit-scrollbar-track-piece { background-color: #2D4054;}
+.left_part::-webkit-scrollbar-thumb { height: 50px; background-color: #E26218; border-radius: 3px;}
+.left_part::-webkit-scrollbar-corner { background-color: #E26218;}
+.left_part::-webkit-resizer { background-color: #E26218;}
 
 .left_menu {
     background: white;
     display: block;
-    width: 16%;
-    margin-right: 40px;
+    width: 75%;
+    margin-left: 12.5%;
     border: 1px solid #D0D0D0;
     padding-top: 20px;
     padding-bottom: 30px;
@@ -190,9 +254,9 @@ main {
 .left_menu select {
     padding-left: 15px;
     display: block;
-    width: 85%;
+    width: 75%;
     margin: 0 auto;
-    height: 35px;
+    height: 40px;
     background: #FFFFFF;
     border: 1px solid #D0D0D0;
     font-size: 18px;
@@ -208,12 +272,16 @@ main {
     margin: 0 auto;
     height: 35px;
     background: #FFFFFF;
-    border: 1px solid #FAC037;
+    border: 1px solid #E26218;
     margin-top: 10px;
 }
 
 .profile_menu_each.selected {
-    background: #FAC037;
+    background: #E26218;
+}
+
+.profile_menu_each.selected a {
+    color: white!important;
 }
 
 .profile_menu_each.logout_btn {
@@ -247,27 +315,30 @@ main {
 
 .left_menu button {
     display: block;
-    width: 85%;
+    width: 75%;
     margin: 0 auto;
-    height: 35px;
-    background: #FAC037;
-    border: 1px solid #FAC037;
+    height: 40px;
+    background: #E26218;
+    border: 1px solid #E26218;
     border: none;
     margin-top: 10px;
     font-size: 18px;
     line-height: 21px;
     font-weight: 400;
+    color: white;
 }
 
 .page_content {
-    width: 82%;
+    width: 65%;
+    padding-top: 70px;
+    padding-left: 2%;
+    padding-bottom: 30px;
 }
 
 .each_vacancy {
     width: 100%;
     display: block;
     background: white;
-    border: 1px solid #D0D0D0;
     padding-top: 20px;
     padding-bottom: 15px;
     margin-bottom: 30px;
@@ -295,13 +366,13 @@ main {
 }
 
 .each_vacancy_desceiption_text p {
-    font-size: 18px;
-    line-height: 25px;
+    font-size: 16px;
+    line-height: 22px;
     font-weight: 400;
 }
 
 .each_vacancy_desceiption_text a {
-    color: #FAC037;
+    color: #E26218;
     display: contents;
 }
 
@@ -322,7 +393,7 @@ main {
 .vacancy_submit {
     width: calc(100% - 60px);
     margin-left: 15px;
-    background: #FAC037;
+    background: #E26218;
     height: 45px;
 }
 
@@ -334,6 +405,7 @@ main {
     line-height: 45px;
     font-weight: 700;
     font-size: 18px;
+    color: white!important;
 }
 
 .heart:hover {
@@ -353,6 +425,7 @@ main {
 }
 
 .login_form.register {
+    margin-top: 40px;
     height: auto;
     margin-bottom: 70px;
 }
@@ -410,8 +483,8 @@ form textarea::placeholder {
 form button {
     width: 60%;
     margin-left:20%;
-    background-color: #FAC037;
-    color: black;
+    background-color: #E26218;
+    color: white;
     font-size: 18px;
     font-weight: 700;
     height: 50px;
@@ -425,7 +498,8 @@ form button {
 
 .page_header.back_link {
     width: 82%;
-    margin: 0 auto;
+    
+    margin-bottom: 30px;
 }
 
 .page_header.back_link a {
@@ -551,6 +625,7 @@ form button {
 
 .profile_container_form {
     width: 80%;
+    margin: auto;
 }
 
 .adaptive_menu {
@@ -575,10 +650,200 @@ form button {
     display: none;
 }
 
+.vacancy_info.img_slider_main {
+    margin-bottom: 40px;
+}
+
+.arrow {
+    width: 5%;
+}
+
+.arrow img {
+    max-width: 100%;
+    width: fit-content;
+}
+
+.arrow img:hover {
+    cursor: pointer;
+}
+
+.sliger_body {
+    display: flex;
+    overflow: hidden;
+    width: 90%;
+}
+
+.sliger_body img {
+    display: none;
+    width: 45%;
+    margin: 0 auto;
+}
+
+.sliger_body img.showed {
+    display: block;
+}
+
+.sliger_body img.go_out {
+    animation: go_out 10s linear infinite;
+}
+
+.sliger_body img.go_in {
+    animation: go_in 10s linear infinite;
+}
+
+.modal_sliger_body {
+    display: flex;
+    overflow: hidden;
+    width: 90%;
+}
+
+.modal_sliger_body img {
+    display: none;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.modal_sliger_body img.showed {
+    display: block;
+}
+
+.modal_sliger_body img.go_out {
+    animation: go_out 10s linear infinite;
+}
+
+.modal_sliger_body img.go_in {
+    animation: go_in 10s linear infinite;
+}
+
+.modal_img_player {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    padding-top: 10%;
+}
+
+.modal_img_slider {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.news_block {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.news_block .page_header h2 {
+    width: calc(100% - 5px);
+    padding-left: 5px;
+    text-align: left;
+}
+
+.news_block .each_vacancy {
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+.news_block .left_vacancy_part {
+    width: 100%;
+}
+
+.news_block .btns {
+    width: 100%;
+}
+
+.news_block .btns .vacancy_submit {
+    width: 50%;
+    margin-top: 15px;
+    margin-left: 0;
+    height: 40px;
+}
+
+.news_block .btns .vacancy_submit a {
+    height: 40px;
+    overflow: hidden;
+}
+
+.main_page_main {
+    max-height: calc(100vh - 130px);
+}
+
+.main_page_main .page {
+    max-height: calc(100vh - 130px);
+}
+
+p img {
+    width: 20%;
+    float: left;
+    margin-right: 10px;
+    padding-bottom: 10px;
+}
+
+.vacancy_row {
+    display: flex;
+    width: 100%;
+}
+
+.vacancy_row .each_vacancy {
+    width: 32%;
+}
+
+.vacancy_row .each_vacancy:nth-child(2) {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.vacancy_row .each_vacancy .vacancy_info h3 {
+    font-size: 14px;
+    line-height: 16px;
+    margin-bottom: 15px;
+}
+
+.vacancy_row .each_vacancy .each_vacancy_desceiption_text p {
+    font-size: 10px;
+    line-height: 18px;
+}
+
+.vacancy_row .each_vacancy .each_vacancy_desceiption_text p img {
+    width: 50%;
+}
+
+.vacancy_row .each_vacancy .left_vacancy_part {
+    width: 100%;
+}
+
+.vacancy_row .each_vacancy .left_vacancy_part.title {
+    width:75%;
+}
+
+.vacancy_row .each_vacancy .left_vacancy_part.date {
+    display: none;
+}
+
+.vacancy_row .each_vacancy .btns {
+    width: 100%;
+}
+
+.vacancy_row .each_vacancy .btns .vacancy_submit{
+    width: 40%;
+    margin-left: 0;
+    height: 25px;
+    margin-top: 10px;
+}
+
+.vacancy_row .each_vacancy .btns .vacancy_submit a{
+    height: 25px;
+    font-size: 12px;
+    line-height: 25px;
+}
+
+.adaptive {
+    display: none;
+}
+
 @media screen and (max-width: 1500px) {
-    .page_header h2 {
-        padding-left: calc(19% + 5px);
-    }
 
     header, footer {
         width: 90%;
@@ -600,7 +865,7 @@ form button {
     }
 
     main {
-        width: 90%;
+        width: 100%;
     }
 
     .com_logo img {
@@ -631,6 +896,15 @@ form button {
 }
 
 @media screen and (max-width: 1100px) {
+    .main_page_main {
+        max-height: none;
+    }
+
+    .main_page_main .page {
+        max-height: none;
+    }
+
+
     main {
         width: 95%;
     }
@@ -651,7 +925,29 @@ form button {
     }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1100px) {
+    .main_page_main .left_part .page_header {
+        display: block;
+        color: black;
+        text-align: center;
+    }
+
+    .main_page_main .left_part .page_header h2 {
+        padding: 0;
+        text-align: center;
+    }
+
+    .news_block {
+        width: 100%;
+    }
+
+    *, body {
+        overflow: visible;
+    }
+
+    .menu_point {
+        display: none;
+    }
 
     .header_buttons {
         width: 50%;
@@ -661,10 +957,25 @@ form button {
         display: block;
     }
 
+    .left_part {
+        width: 100%;
+        background: none;
+        padding-top: 40px;
+        padding-bottom: 0;
+    }
+
+    .left_part .page_header {
+        display: none;
+    }
+
     .left_menu {
         width: 100%;
         margin-right: 0;
         margin-bottom: 30px;
+        margin-left: 0;
+        padding-top: 20px;
+        padding-bottom: 30px;
+        border: none;
     }
 
     .left_menu select {
@@ -677,10 +988,18 @@ form button {
 
     .page_content {
         width: 100%;
+        padding-left: 0;
     }
 
     .left_vacancy_part {
         width: 70%;
+    }
+
+    .page_header h2 {
+        width: 100%;
+        padding-left: 0;
+        margin-bottom: 30px;
+        text-align: center;
     }
 
     .price {
@@ -696,9 +1015,135 @@ form button {
     .btns {
         width: calc(30% + 60px);
     }
+
+    .each_vacancy {
+        border: none;
+    }
+
+    footer .header_logo {
+        width: 100%;
+        text-align: center;
+    }
+
+    .header_buttons {
+        display: none;
+    }
+
+    footer .header_buttons {
+        display: none;
+    }
+
+    .adaptive_menu {
+        display: block;
+        position: absolute;
+        right: 10%;
+        width: fit-content;
+    }
+
+    .adaptive_menu img {
+        vertical-align: bottom;
+    }
+
+    .adaptive_menu_info .header_buttons {
+        display: block;
+        padding-top: 20px;
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 65px;
+        background: #2D4054;
+    }
+
+    .adaptive_menu_info .header_buttons button {
+        display: block;
+        width: 60%;
+        margin-left: 20%;
+        background: #E26218;
+        border: none;
+        color: white;
+        height: 40px;
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .header_buttons_info p {
+        font-size: 18px;
+        padding-right: 0%;
+        line-height: 30px;
+        text-align: center;
+        font-weight: 500;
+        padding-bottom: 10px;
+    }
+
+    .header_buttons_info a {
+        padding-bottom: 15px;
+        line-height: 30px;
+        color: white!important;
+    }
+
+    .header_buttons_info:first-child {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .account_info {
+        display: none;
+    }
+    .arrow {
+        display: none;
+    }
+
+    .sliger_body {
+        width: 100%;
+        display: block;
+    }
+
+    .sliger_body img {
+        display: block;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .modal_img_player {
+        display: none;
+    }
+
+    .header_buttons_info.account_name a {
+        font-weight: 600;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .vacancy_row {
+        display: none;
+    }
+
+    .adaptive {
+        display: block;
+    }
 }
 
 @media screen and (max-width: 500px) {
+    .menu_point {
+        display: none;
+    }
+
+    .header_account {
+        display: none;
+    }
+
+    .header_buttons_info:first-child {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .header_buttons_info a {
+        padding-bottom: 15px;
+        line-height: 30px;
+        color: white!important;
+    }
+
     input, select, textarea, button {
         font-size: 16px!important;
     }
@@ -714,7 +1159,7 @@ form button {
 
     .page_header h2 {
         padding-left: 0;
-        font-size: 20px;
+        font-size: 22px;
         text-align: center;
         width: 100%;
     }
@@ -723,10 +1168,24 @@ form button {
         display: block;
     }
 
+    .left_part {
+        width: 100%;
+        background: none;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .left_part .page_header {
+        display: none;
+    }
+
     .left_menu {
         width: 100%;
         margin-right: 0;
-        margin-bottom: 30px;
+        margin-bottom: 0;
+        margin-left: 0;
+        padding-top: 20px;
+        padding-bottom: 30px;
     }
 
     .left_menu select {
@@ -743,6 +1202,9 @@ form button {
 
     .page_content {
         width: 100%;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        padding-left: 0;
     }
 
     .vacancy_info {
@@ -814,17 +1276,17 @@ form button {
         position: absolute;
         right: 0;
         top: 65px;
-        background: #FAC037;
+        background: #2D4054;
     }
 
     .adaptive_menu_info .header_buttons button {
         display: block;
         width: 60%;
         margin-left: 20%;
-        background: black;
+        background: #E26218;
         border: none;
         color: white;
-        height: 35px;
+        height: 40px;
         font-size: 15px;
         font-weight: 600;
         margin-bottom: 15px;
@@ -913,6 +1375,7 @@ form button {
 
     .page_header.back_link {
         margin: 0;
+        margin-bottom: 15px;
     }
 
     .page_header.back_link a {
@@ -933,5 +1396,33 @@ form button {
 
     .profile_container_form {
         width: 100%;
+    }
+
+    .arrow {
+        display: none;
+    }
+
+    .sliger_body {
+        width: 100%;
+        display: block;
+    }
+
+    .sliger_body img {
+        display: block;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .modal_img_player {
+        display: none;
+    }
+
+    .header_buttons_info.account_name a {
+        font-weight: 600;
+    }
+
+    p img {
+        width: 100%;
+        margin-right: 0;
     }
 }

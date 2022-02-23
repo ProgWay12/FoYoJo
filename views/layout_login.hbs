@@ -9,9 +9,37 @@
     <link rel="shortcut icon" href="/static/img/Favicon.png" type="image/png">
 </head>
 <body>
+    <div class="adaptive_menu_info">
+        <div class="header_buttons">
+            <div class="header_buttons_info account_name">
+                <a href="/profile_personal_data/{{user_id}}">{{user_name}}</a>
+            </div>
+            <div class="header_buttons_info">
+                <a href="/vacancies">Предложения</a>
+            </div>
+            <div class="header_buttons_info">
+                <a href="">Оставить заявку</a>
+            </div>
+            <div class="header_buttons_info">
+                <p>mail@mail.ru</p>
+            </div>
+            <div class="header_buttons_info">
+                <p>9(999)999-99-99</p>
+            </div>
+        </div>
+    </div>
     <header>
         <div class="header_logo" onclick="window.location.href = '/'">
-            <h1>Fo<span>Yo</span>Jo</h1>
+            <img src="/static/img/main_logo.png" alt="">
+        </div>
+        <div class="menu_point">
+            <a href="/vacancies">Предложения</a>
+        </div>
+        <div class="menu_point">
+            <a href="">Оставить заявку</a>
+        </div>
+        <div class="adaptive_menu" onclick="show_menu(this)">
+            <img src="/static/img/adaptive_menu.png" alt="">
         </div>
         <div class="header_account" onclick="window.location.href = '/profile_personal_data/{{user_id}}'">
             <!--
@@ -24,12 +52,58 @@
             </div>
         </div>
     </header>
-    <main>
+    <div class="modal_img_player hiden" id="modal_img_player">
+        <div class="modal_img_slider">
+            {{#if is_null_work_place_imgs}}
+                <div class="vacancy_info img_slider" style="display: none;">
+                </div>
+            {{else}}
+                {{#if count_1}}
+                    <div class="vacancy_info img_slider">
+                        <div class="main_img count_1">
+                            <img src="{{img_block.main_img}}" alt="" id="main_img">
+                        </div>
+                    </div>
+                {{else}}
+                    {{#if count_2}}
+                        <div class="vacancy_info img_slider_main">
+                            <div class="arrow hiden">
+                                <img src="/static/img/left.png" alt="" onclick="show_prev_modal()">
+                            </div>
+                            <div class="modal_sliger_body" style="width: 100%;">
+                                {{#each img_block.imgs}}
+                                    <img src="{{this}}" alt="" onclick="change_main_img(this)">
+                                {{/each}}
+                            </div>
+                            <div class="arrow hiden">
+                                <img src="/static/img/right.png" style="float: right;" alt="" onclick="show_next_modal()">
+                            </div>
+                        </div>
+                    {{else}}
+                        <div class="vacancy_info img_slider_main">
+                            <div class="arrow">
+                                <img src="/static/img/left.png" alt="" onclick="show_prev_modal()">
+                            </div>
+                            <div class="modal_sliger_body">
+                                {{#each img_block.imgs}}
+                                    <img src="{{this}}" alt="" onclick="change_main_img(this)">
+                                {{/each}}
+                            </div>
+                            <div class="arrow">
+                                <img src="/static/img/right.png" style="float: right;" alt="" onclick="show_next_modal()">
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/if}}
+            {{/if}}
+        </div>
+    </div>
+    <main {{#if main_page}}class="main_page_main"{{/if}}>
         {{{body}}}
     </main>
     <footer>
-        <div class="header_logo">
-            <h1>Fo<span>Yo</span>Jo</h1>
+        <div class="header_logo" onclick="window.location.href = '/'">
+            <img src="/static/img/main_logo.png" alt="">
         </div>
         <div class="header_buttons">
             <div class="header_buttons_info">

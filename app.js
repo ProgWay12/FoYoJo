@@ -99,6 +99,20 @@ const pool = mysql.createPool({
 });
 
 app.get("/", (req, res) => {
+    if (req.session.logged_in) {
+        res.render("main_page.hbs", {
+            layout: "layout_login",
+            main_page: true
+        })
+    } else {
+        res.render("main_page.hbs", {
+            layout: "layout_not_login",
+            main_page: true
+        })
+    }
+})
+
+app.get("/vacancies", (req, res) => {
     pool.query("select * from vacancies", (err, result) => {
         if (err) {
             res.sendStatus(502)
@@ -364,6 +378,7 @@ app.get("/vacancy/:id", (req, res) => {
                 var count_3 = false
                 var count_2 = false
                 var count_1 = false
+                /*
                 if (result[0].work_place_imgs_paths.length >= 6) {
                     count_6 = true
                     var img_block = {
@@ -399,6 +414,38 @@ app.get("/vacancy/:id", (req, res) => {
                     count_1 = true
                     var img_block = {
                         main_img: result[0].work_place_imgs_paths[0]
+                    }
+                }
+                */
+
+                if (result[0].work_place_imgs_paths.length == 1) {
+                    count_1 = true
+                    var img_block = {
+                        main_img: result[0].work_place_imgs_paths[0]
+                    }
+                } else if (result[0].work_place_imgs_paths.length == 2) {
+                    count_2 = true
+
+                    var imgs = []
+
+                    result[0].work_place_imgs_paths.forEach((elem, i) => {
+                        imgs.push(elem)
+                    })
+
+                    var img_block = {
+                        imgs: imgs
+                    }
+                } else {
+                    count_3 = true
+
+                    var imgs = []
+
+                    result[0].work_place_imgs_paths.forEach((elem, i) => {
+                        imgs.push(elem)
+                    })
+
+                    var img_block = {
+                        imgs: imgs
                     }
                 }
             }
@@ -725,10 +772,10 @@ app.post("/create_response", jsonParser, (req, res) => {
 })
 
 app.post("/show_filtred", jsonParser, (req, res) => {
-    res.redirect(`/filtred/${req.body.speciality}/${req.body.voivodeship}/${req.body.city}/${req.body.vacancy_price}/${req.body.work_type}/${req.body.country}`)
+    res.redirect(`/vacancies/filtred/${req.body.speciality}/${req.body.voivodeship}/${req.body.city}/${req.body.vacancy_price}/${req.body.work_type}/${req.body.country}`)
 })
 
-app.get("/filtred/:speciality/:voivodeship/:city/:vacancy_price/:work_type/:country", (req, res) => {
+app.get("/vacancies/filtred/:speciality/:voivodeship/:city/:vacancy_price/:work_type/:country", (req, res) => {
     var pool_vac_str = `select * from vacancies where`
     var params_arr = []
     if (req.params.speciality != 'all') {

@@ -1,27 +1,33 @@
 
-    <div class="page_header profile">
-        <h2>Избранное</h2>
-    </div>
+    
 
     <div class="page">
-        <form class="left_menu">
-            <div class="profile_menu_each">
-                <a href="/profile_personal_data/{{user_id}}">Профиль</a>
+        <div class="left_part">
+            <div class="page_header " style="opacity: 0;">
+                <h2>Актуальные предложения</h2>
             </div>
-            <div class="profile_menu_each">
-                <a href="/profile_contacts/{{user_id}}">Обратная связь</a>
-            </div>
-            <div class="profile_menu_each selected">
-                <a href="/profile_favorites/{{user_id}}">Избранное</a>
-            </div>
-            <div class="profile_menu_each">
-                <a href="/profile_answers/{{user_id}}">Мои отклики</a>
-            </div>
-            <div class="profile_menu_each logout_btn">
-                <a href="/logout">Выйти</a>
-            </div>
-        </form>
+            <form class="left_menu">
+                <div class="profile_menu_each">
+                    <a href="/profile_personal_data/{{user_id}}">Профиль</a>
+                </div>
+                <div class="profile_menu_each">
+                    <a href="/profile_contacts/{{user_id}}">Обратная связь</a>
+                </div>
+                <div class="profile_menu_each selected">
+                    <a href="/profile_favorites/{{user_id}}">Избранное</a>
+                </div>
+                <div class="profile_menu_each">
+                    <a href="/profile_answers/{{user_id}}">Мои отклики</a>
+                </div>
+                <div class="profile_menu_each logout_btn">
+                    <a href="/logout">Выйти</a>
+                </div>
+            </form>
+        </div>
         <div class="page_content">
+            <div class="page_header profile">
+                <h2>Избранное</h2>
+            </div>
             {{#each vacancies}}
                 <div class="each_vacancy">
                     <div class="vacancy_info">
@@ -29,7 +35,7 @@
                             <h3>{{this.vacancy_title}}</h3>
                         </div>
                         <div class="price">
-                            <h3>{{this.vacancy_price}} ₽</h3>
+                            <h3>{{this.vacancy_price}} Zł</h3>
                         </div>
                     </div>
                     <div class="vacancy_info">
