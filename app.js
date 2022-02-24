@@ -996,6 +996,18 @@ app.get("/logout", (req, res) => {
     res.redirect("/login")
 })
 
+app.get("/send_application", (req, res) => {
+    if (req.session.logged_in) {
+        res.render("send_application.hbs", {
+            layout: "layout_login"
+        })
+    } else {
+        res.render("send_application.hbs", {
+            layout: "layout_not_login"
+        })
+    }
+})
+
 //* adminboard
 
 app.get("/admin_login", (req, res) => {
