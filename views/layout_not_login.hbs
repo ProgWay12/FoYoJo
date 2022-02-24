@@ -6,9 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>FoYoJo</title>
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/preloader.css">
     <link rel="shortcut icon" href="/static/img/Favicon.png" type="image/png">
 </head>
 <body>
+    
+    {{#if main_page}}
+        <div class="preloader">
+            <div class="preloader_logo">
+                <img src="/static/img/main_logo.png" alt="">
+            </div>
+            <div class="load-3">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </div>
+    {{/if}}
+
     <div class="adaptive_menu_info">
         <div class="header_buttons">
             <div class="header_buttons_info">
@@ -107,6 +122,17 @@
             </div>
         </div>
     </footer>
+
     <script src="/static/js/main.js"></script>
+    {{#if main_page}}
+        <script>
+            window.onload = () => {
+                document.querySelector(".preloader").classList.add("preload_hiden")
+                setTimeout(() => {
+                    document.querySelector(".preloader").classList.add("preload_hided")
+                }, 2000)
+            }
+        </script>
+    {{/if}}
 </body>
 </html>
