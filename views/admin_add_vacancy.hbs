@@ -3,10 +3,10 @@
         <h2>Добавить вакансию</h2>
     </div>
     <form action="/admin_add_vacancy" method="post" enctype="multipart/form-data">
-        <input type="text" name="vacancy_title" placeholder="Заголовок">
-        <input type="number" name="vacancy_price" placeholder="ЗП">
-        <textarea name="vacancy_description" id="" cols="30" rows="10" placeholder="Описание"></textarea>
-        <select name="voivodeship" id="">
+        <input type="text" name="vacancy_title" placeholder="Заголовок" required>
+        <input type="number" name="vacancy_price" placeholder="ЗП" required>
+        <textarea name="vacancy_description" id="" cols="30" rows="10" placeholder="Описание" required></textarea>
+        <select name="voivodeship" id="" required>
             <option value="">Воевудство</option>
             <option value="Варминьско-Мазурское">Варминьско-Мазурское</option>
             <option value="Великопольское">Великопольское</option>
@@ -25,7 +25,7 @@
             <option value="Свентокшиское">Свентокшиское</option>
             <option value="Силезское">Силезское</option>
         </select>
-        <select name="city" onchange="add_new_city(this)">
+        <select name="city" onchange="add_new_city(this)" required>
             <option value="">Город</option>
             {{#each cities}}
                 <option value="{{this.city}}">{{this.city}}</option>
@@ -33,7 +33,7 @@
             <option value="new">Добавить новый город</option>
         </select>
         <input class="hiden" type="text" name="new_city" id="new_city">
-        <select name="work_type" id="" onchange="add_new_schedule(this)">
+        <select name="work_type" id="" onchange="add_new_schedule(this)" required>
             <option value="">График</option>
             {{#each schedules}}
                 <option value="{{this.schedule_type}}">{{this.schedule_type}}</option>
@@ -41,7 +41,7 @@
             <option value="new">Добавить новый график</option>
         </select>
         <input class="hiden" type="text" name="new_schedule" id="new_schedule">
-        <select name="speciality" id="" onchange="add_new_speciality(this)">
+        <select name="speciality" id="" onchange="add_new_speciality(this)" required>
             <option value="">Специальность</option>
             {{#each specialities}}
                 <option value="{{this.speciality}}">{{this.speciality}}</option>
@@ -49,7 +49,7 @@
             <option value="new">Добавить новую специальность</option>
         </select>
         <input class="hiden" type="text" name="new_speciality" id="new_speciality">
-        <select name="country" id="" onchange="add_new_country(this)">
+        <select name="country" id="" onchange="add_new_country(this)" required>
             <option value="">Страна</option>
             {{#each countries}}
                 <option value="{{this.country}}">{{this.country}}</option>
@@ -61,6 +61,6 @@
         <input type="file" name="company_logo">
         <label for="company_logo">Фотографии рабочего пространства</label>
         <input type="file" name="work_place_imgs" multiple>
-        <button type="submit">Опубликовать</button>
+        <input type="submit" value="Опубликовать">
     </form>
 </div>

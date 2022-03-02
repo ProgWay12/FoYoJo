@@ -1,34 +1,32 @@
-
-<div class="page vacancy">
+<div class="page">
+    <div class="left_part">
+    </div>
     <div class="page_content">
-        <div class="page_header back_link">
-            <a href="/admin">< К списку проектов</a>
+        <div class="page_header ">
+            <h2>Новости</h2>
         </div>
-        {{#each users}}
+        {{#each news}}
             <div class="each_vacancy">
                 <div class="vacancy_info">
                     <div class="title left_vacancy_part">
-                        <h3>{{this.full_name}}</h3>
+                        <h3>{{this.title}}</h3>
                     </div>
                 </div>
                 <div class="vacancy_info">
                     <div class="each_vacancy_desceiption_text left_vacancy_part">
-                        <p>{{this.documents}}</p>
-                        <p>{{this.speciality}} - {{this.experience}} лет</p>
-                        <p>{{this.language_lvl}}</p>
+                        <p>{{this.short_news_description}}<a class="show_more" href="/news/{{this.id}}">Показать больше</a></p>
                     </div>
                 </div>
-
                 <div class="vacancy_info">
-                    <div class="date left_vacancy_part" style="opacity: 0;">
+                    <div class="date left_vacancy_part">
                         <p>Дата публикации: {{this._date}}</p>
                     </div>
                     <div class="btns">
-                        <div class="heart unactive"  style="opacity: 0;">
+                        <div class="heart unactive" onclick="delete_news({{this.id}})">
                             <img src="/static/img/delete.png" alt="">
                         </div>
-                        <div class="vacancy_submit">
-                            <a href="/response/{{this.id}}" target="_blank">Подробнее</a>
+                        <div class="heart unactive" onclick="edit_news({{this.id}})">
+                            <img src="/static/img/edit.png" alt="">
                         </div>
                     </div>
                 </div>

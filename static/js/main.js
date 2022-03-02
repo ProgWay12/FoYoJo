@@ -42,7 +42,7 @@ function create_response(heart, vacancy_id) {
     req.open("POST", "/create_response", true);   
     req.setRequestHeader("Content-Type", "application/json");
     req.addEventListener("load", function () {
-        window.location.href = "/"
+        window.location.href = "/vacancies"
     });
     req.send(info);
 }
@@ -142,4 +142,25 @@ function add_new_country(selector) {
     }
 }
 
-document.getElementById('avatar_uploader').addEventListener('change', showFile, false);
+function delete_news(id) {  
+    var info = JSON.stringify({
+        id: id
+    })
+
+    let req = new XMLHttpRequest();
+
+    req.open("POST", "/delete_news", true);   
+    req.setRequestHeader("Content-Type", "application/json");
+    req.addEventListener("load", function () {
+        window.location.reload()
+    });
+    req.send(info);
+}
+
+function edit_news(id) {
+    window.location.href = `/edit_news/${id}`
+}
+
+if (typeof(document.getElementById('avatar_uploader')) != "undefined" && document.getElementById('avatar_uploader') != null) {
+    document.getElementById('avatar_uploader').addEventListener('change', showFile, false);
+}

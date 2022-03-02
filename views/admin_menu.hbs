@@ -1,0 +1,23 @@
+<div class="admin_menu">
+    <div onclick="window.location.href = '/admin_add_vacancy'" class="header_buttons_info">
+        <p>Добавить вакансию</p>
+    </div>
+    <div onclick="window.location.href = '/admin_add_news'" class="header_buttons_info">
+        <p>Добавить новость</p>
+    </div>
+    <div onclick="window.location.href = '/admin_vacancies'" class="header_buttons_info">
+        <p>Все вакансии</p>
+    </div>
+    <div onclick="window.location.href = '/admin_news'" class="header_buttons_info">
+        <p>Все новости</p>
+    </div>
+    <div onclick="window.location.href = '/update_admin'" class="header_buttons_info">
+        <p>Настройки</p>
+    </div>
+    <div onclick="window.location.href = '/admin_usersapplications'" class="header_buttons_info">
+        <p>Заявки пользователей</p>
+    </div>
+    <div onclick="window.location.href = '/admin_birthdays'" class="header_buttons_info">
+        <p {{#if is_birthday}}style="color: #E26218;"{{/if}}>Дни рождения</p>
+    </div>
+</div>

@@ -28,6 +28,8 @@ const storageConfig = multer.diskStorage({
             cb(null, "./static/img/company_logo"); 
         } else if (file.fieldname == "work_place_imgs") {
             cb(null, "./static/img/work_place_imgs"); 
+        } else if (file.fieldname == "imgs_paths") {
+            cb(null, "./static/img/news_imgs"); 
         }
     },
     filename: (req, file, cb) =>{
@@ -47,6 +49,10 @@ app.use(multer({storage:storageConfig}).fields([{
 },
 {
     name: "work_place_imgs",
+    maxCount: 1000
+},
+{
+    name: "imgs_paths",
     maxCount: 1000
 }]));
 /*
@@ -99,17 +105,76 @@ const pool = mysql.createPool({
 });
 
 app.get("/", (req, res) => {
-    if (req.session.logged_in) {
-        res.render("main_page.hbs", {
-            layout: "layout_login",
-            main_page: true
-        })
-    } else {
-        res.render("main_page.hbs", {
-            layout: "layout_not_login",
-            main_page: true
-        })
-    }
+    pool.query("select * from news", (err, news) => {
+        if (err) {
+            console.log(err)
+            res.sendStatus(502)
+        } else {
+            pool.query("select * from vacancies", (err_v, vacancies) => {
+                if (err_v) {
+                    console.log(err_v)
+                    res.sendStatus(502)
+                } else {
+                    vacancies = vacancies.reverse()
+                    var main_vacancy = {
+                        id: vacancies[0].id,
+                        vacancy_title: vacancies[0].vacancy_title,
+                        vacancy_price: vacancies[0].vacancy_price,
+                        short_decription: vacancies[0].short_decription,
+                        _date: vacancies[0]._date,
+                        preview_img: String(vacancies[0].work_place_imgs_paths).split("|")[0]
+                    }
+
+                    var sub_vacancies = [
+                        {
+                            id: vacancies[1].id,
+                            vacancy_title: vacancies[1].vacancy_title,
+                            vacancy_price: vacancies[1].vacancy_price,
+                            short_decription: vacancies[1].short_decription,
+                            _date: vacancies[1]._date,
+                            preview_img: String(vacancies[1].work_place_imgs_paths).split("|")[0]
+                        },
+                        {
+                            id: vacancies[2].id,
+                            vacancy_title: vacancies[2].vacancy_title,
+                            vacancy_price: vacancies[2].vacancy_price,
+                            short_decription: vacancies[2].short_decription,
+                            _date: vacancies[2]._date,
+                            preview_img: String(vacancies[2].work_place_imgs_paths).split("|")[0]
+                        },
+                        {
+                            id: vacancies[3].id,
+                            vacancy_title: vacancies[3].vacancy_title,
+                            vacancy_price: vacancies[3].vacancy_price,
+                            short_decription: vacancies[3].short_decription,
+                            _date: vacancies[3]._date,
+                            preview_img: String(vacancies[3].work_place_imgs_paths).split("|")[0]
+                        }
+                    ]
+
+                    if (req.session.logged_in) {
+                        res.render("main_page.hbs", {
+                            layout: "layout_login",
+                            user_name: req.session.username,
+                            user_id: req.session.user_id,
+                            main_page: true,
+                            news: news.reverse(),
+                            main_vacancy: main_vacancy,
+                            sub_vacancies: sub_vacancies
+                        })
+                    } else {
+                        res.render("main_page.hbs", {
+                            layout: "layout_not_login",
+                            main_page: true,
+                            news: news.reverse(),
+                            main_vacancy: main_vacancy,
+                            sub_vacancies: sub_vacancies
+                        })
+                    }
+                }
+            })
+        }
+    })
 })
 
 app.get("/vacancies", (req, res) => {
@@ -118,6 +183,26 @@ app.get("/vacancies", (req, res) => {
             res.sendStatus(502)
             console.log(err)
         } else {
+            var previews = []
+            result.forEach((elem, i) => {
+                previews.push({
+                    id: elem.id,
+                    vacancy_title: elem.vacancy_title,
+                    vacancy_price: elem.vacancy_price,
+                    vacancy_description: elem.vacancy_description,
+                    voivodeship: elem.voivodeship,
+                    city: elem.city,
+                    speciality: elem.speciality,
+                    work_type: elem.work_type,
+                    short_decription: elem.short_decription,
+                    _date: elem._date,
+                    country: elem.country,
+                    company_logo: elem.company_logo,
+                    work_place_imgs_paths: elem.work_place_imgs_paths,
+                    preview_img: String(elem.work_place_imgs_paths).split("|")[0]
+                })
+            })
+            result = previews
             if (req.session.logged_in) {
                 pool.query("select * from responses where user_id = ?", [req.session.user_id], (err2, responses) => {
                     if (err2) {
@@ -315,6 +400,7 @@ app.post("/registration", (req, res) => {
     const whatsapp_numb = req.body.whatsapp_numb
     const viber_numb = req.body.viber_numb
     const telegram_numb = req.body.telegram_numb
+    const birthday = req.body.birthday
     pool.query("select * from users where email = ?", [email] , (email_test_err, email_test) => {
         if (email_test_err) {
             console.log(email_test_err)
@@ -327,8 +413,8 @@ app.post("/registration", (req, res) => {
                         res.sendStatus(502)
                     } else {
                         if (typeof(phone_test[0]) == "undefined") {
-                            pool.query("insert into users (email, pass, full_name, phone, documents, speciality, experience, language_lvl, personal_qualities, whatsapp_numb, viber_numb, telegram_numb) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                                [email, password, full_name, phone, documents, speciality, experience, language_lvl, personal_qualities, whatsapp_numb, viber_numb, telegram_numb], (err, results) => {
+                            pool.query("insert into users (email, pass, full_name, phone, documents, speciality, experience, language_lvl, personal_qualities, whatsapp_numb, viber_numb, telegram_numb, birthday) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                                [email, password, full_name, phone, documents, speciality, experience, language_lvl, personal_qualities, whatsapp_numb, viber_numb, telegram_numb, birthday], (err, results) => {
                                     if (err) {
                                         console.log(err)
                                         res.sendStatus(502)
@@ -515,6 +601,93 @@ app.get("/vacancy/:id", (req, res) => {
         }
     })
     
+})
+
+app.get("/news/:id", (req, res) => {
+    pool.query("select * from news where id = ?", [req.params.id], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.sendStatus(502)
+        } else {
+            if (result[0].imgs_paths == null) {
+                var is_null_imgs_paths = true
+            } else {
+                var is_null_imgs_paths = false
+                result[0].imgs_paths = String(result[0].imgs_paths).split("|")
+                var count_6 = false
+                var count_5 = false
+                var count_4 = false
+                var count_3 = false
+                var count_2 = false
+                var count_1 = false
+
+                if (result[0].imgs_paths.length == 1) {
+                    count_1 = true
+                    var img_block = {
+                        main_img: result[0].imgs_paths[0]
+                    }
+                } else if (result[0].imgs_paths.length == 2) {
+                    count_2 = true
+
+                    var imgs = []
+
+                    result[0].imgs_paths.forEach((elem, i) => {
+                        imgs.push(elem)
+                    })
+
+                    var img_block = {
+                        imgs: imgs
+                    }
+                } else {
+                    count_3 = true
+
+                    var imgs = []
+
+                    result[0].imgs_paths.forEach((elem, i) => {
+                        imgs.push(elem)
+                    })
+
+                    var img_block = {
+                        imgs: imgs
+                    }
+                }
+            }
+
+            result[0].news_description = String(result[0].news_description).split("|")
+            if (req.session.logged_in) {
+                res.render("news.hbs", {
+                    layout: "layout_login",
+                    user_name: req.session.username,
+                    user_id: req.session.user_id,
+                    news_info: result[0],
+                    is_null_imgs_paths: is_null_imgs_paths,
+                    count_1: count_1,
+                    count_2: count_2,
+                    count_3: count_3,
+                    count_4: count_4,
+                    count_5: count_5,
+                    count_6: count_6,
+                    img_block: img_block
+                })
+                
+            } else {
+                res.render("news.hbs", {
+                    layout: "layout_not_login",
+                    news_info: result[0],
+                    is_null_imgs_paths: is_null_imgs_paths,
+                    count_1: count_1,
+                    count_2: count_2,
+                    count_3: count_3,
+                    count_4: count_4,
+                    count_5: count_5,
+                    count_6: count_6,
+                    img_block: img_block,
+                    is_fav: false,
+                    is_responsed: false
+                })
+            }
+        }
+    })
 })
 
 app.get("/profile_personal_data/:id", (req, res) => {
@@ -827,7 +1000,28 @@ app.get("/vacancies/filtred/:speciality/:voivodeship/:city/:vacancy_price/:work_
             res.sendStatus(502)
             console.log(err)
         } else {
-            
+            var previews = []
+            result.forEach((elem, i) => {
+                previews.push({
+                    id: elem.id,
+                    vacancy_title: elem.vacancy_title,
+                    vacancy_price: elem.vacancy_price,
+                    vacancy_description: elem.vacancy_description,
+                    voivodeship: elem.voivodeship,
+                    city: elem.city,
+                    speciality: elem.speciality,
+                    work_type: elem.work_type,
+                    short_decription: elem.short_decription,
+                    _date: elem._date,
+                    country: elem.country,
+                    company_logo: elem.company_logo,
+                    work_place_imgs_paths: elem.work_place_imgs_paths,
+                    preview_img: String(elem.work_place_imgs_paths).split("|")[0]
+                })
+            })
+            result = previews
+
+
             var filtred_arr = []
 
             if (req.params.vacancy_price != 'all') {
@@ -848,7 +1042,7 @@ app.get("/vacancies/filtred/:speciality/:voivodeship/:city/:vacancy_price/:work_
                 })
                 result = filtred_arr
             }
-
+            
             if (req.session.logged_in) {
                 pool.query("select * from responses where user_id = ?", [req.session.user_id], (err2, responses) => {
                     if (err2) {
@@ -1008,6 +1202,17 @@ app.get("/send_application", (req, res) => {
     }
 })
 
+app.post("/send_application", jsonParser, (req, res) => {
+    pool.query("insert into applications (user_name, email, phone) values (?, ?, ?)", [req.body.full_name, req.body.email, req.body.phone], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.sendStatus(502)
+        } else {
+            res.redirect("/")
+        }
+    })
+})
+
 //* adminboard
 
 app.get("/admin_login", (req, res) => {
@@ -1038,6 +1243,41 @@ app.post("/admin_login", jsonParser, (req, res) => {
 })
 
 app.get("/admin", (req, res) => {
+    if (req.session.admin_logged_in) {
+        var month = String(new Date().getMonth() + 1)
+        if (month.length == 1) {
+            var month = "0" + String(new Date().getMonth() + 1)
+        }
+
+        var date = String(new Date().getDate())
+        if (date.length == 1) {
+            var date = "0" + String(new Date().getDate())
+        }
+
+        var date = `${new Date().getFullYear()}-${month}-${date}`
+        pool.query("select * from users where birthday = ?", [date], (err, users) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(502)
+            } else {
+                var is_birthday = false
+                if (users.length > 0) {
+                    is_birthday = true
+                }
+
+                res.render("admin_menu.hbs", {
+                    layout: "layout_admin",
+                    menu: true,
+                    is_birthday: is_birthday
+                })
+            }
+        })
+    } else {
+        res.redirect("/admin_login")
+    }
+})
+
+app.get("/admin_vacancies", (req, res) => {
     pool.query("select * from vacancies", (err, result) => {
         if (err) {
             res.sendStatus(502)
@@ -1308,6 +1548,222 @@ app.post("/admin_add_vacancy", jsonParser, (req, res) => {
                 }
             })
 
+})
+
+app.get("/admin_add_news", (req, res) => {
+    if (req.session.admin_logged_in) {
+        res.render("admin_add_news.hbs", {
+            layout: "layout_admin"
+        })
+    } else {
+        res.redirect("/admin_login")
+    }
+})
+
+app.post("/admin_add_news", jsonParser, (req, res) => {
+
+    if (String(req.body.news_description).includes("\r\n")) {
+        var mid_desc = ``
+        for (var i = 0; i < String(req.body.news_description).split("\r\n").length; i++) {
+            if (String(req.body.news_description).split("\r\n")[i].length > 0) {
+                if (i != String(req.body.news_description).split("\r\n").length - 1) {
+                    mid_desc += String(req.body.news_description).split("\r\n")[i] + "|"
+                } else {
+                    mid_desc += String(req.body.news_description).split("\r\n")[i]
+                }
+            }
+        }
+        var news_description = mid_desc
+    } else if (String(req.body.news_description).includes("\n")) {
+        var mid_desc = ``
+        for (var i = 0; i < String(req.body.news_description).split("\n").length; i++) {
+            if (String(req.body.news_description).split("\r\n")[i].length > 0) {
+                if (i != String(req.body.news_description).split("\n").length - 1) {
+                    mid_desc += String(req.body.news_description).split("\n")[i] + "|"
+                } else {
+                    mid_desc += String(req.body.news_description).split("\n")[i]
+                }    
+            }
+        }
+        var news_description = mid_desc
+    } else if (String(req.body.news_description).includes("\r")) {
+        var mid_desc = ``
+        for (var i = 0; i < String(req.body.news_description).split("\r").length; i++) {
+            if (String(req.body.news_description).split("\r\n")[i].length > 0) {
+                if (i != String(req.body.news_description).split("\r").length - 1) {
+                    mid_desc += String(req.body.news_description).split("\r")[i] + "|"
+                } else {
+                    mid_desc += String(req.body.news_description).split("\r")[i]
+                }
+            }
+        }
+        var news_description = mid_desc
+    } else {
+        var news_description = req.body.news_description
+    }
+
+    var short_news_description = ''
+    for (var i = 0; i < news_description.split("|").length; i++) {
+        for (var j = 0; j < news_description.split("|")[i].split(" ").length; j++) {
+            short_news_description += String(news_description.split("|")[i].split(" ")[j]) + " "
+            if (short_news_description.length > 300) {
+                break
+            }
+        }
+        if (short_news_description.length > 300) {
+            break
+        }
+    }
+
+    if (String(new Date().getDate()).length == 1) {
+        var date = `0${String(new Date().getDate())}`
+    } else {
+        var date = `${String(new Date().getDate())}`
+    }
+
+    if (String(new Date().getMonth() + 1).length == 1) {
+        var month = `0${String(new Date().getMonth() + 1)}`
+    } else {
+        var month = `${String(new Date().getMonth() + 1)}`
+    }
+
+    var date = `${date}.${month}.${new Date().getFullYear()}`
+
+    if (typeof(req.files.imgs_paths) != "undefined") {
+        var imgs_paths = ''
+        for (var i = 0; i < req.files.imgs_paths.length; i++) {
+            if (i == req.files.imgs_paths.length - 1) {
+                imgs_paths += `/${req.files.imgs_paths[i].path}`
+            } else {
+                imgs_paths += `/${req.files.imgs_paths[i].path}|`
+            }
+        }
+    } else {
+        var imgs_paths = ''
+    }
+
+    var title = req.body.news_title
+
+    pool.query("insert into news (title, news_description, imgs_paths, _date, short_news_description) values (?, ?, ?, ?, ?)",
+            [title, news_description, imgs_paths, date, short_news_description], (err, results) => {
+                if (err) {
+                    console.log(err)
+                    res.sendStatus(502)
+                } else {
+                    res.redirect("/admin_news")
+                }
+            })
+})
+
+app.get("/admin_news", (req, res) => {
+    if (req.session.admin_logged_in) {
+        pool.query("select * from news", (err, result) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(502)
+            } else {
+                res.render("admin_news.hbs", {
+                    layout: "layout_admin",
+                    news: result.reverse()
+                })
+            }
+        })
+    } else {
+        res.redirect("/admin_login")
+    }
+})
+
+app.post("/delete_news", jsonParser, (req, res) => {
+    pool.query("delete from news where id = ?", [req.body.id], (err, result) => {
+        if (err) {
+            res.sendStatus(err)
+            console.log(err)
+        } else {
+            res.send()
+        }
+    })
+})
+
+app.get("/edit_news/:id", (req, res) => {
+    if (req.session.admin_logged_in) {
+        pool.query("select * from news where id = ?", [req.params.id], (err, result) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(502)
+            } else {
+                res.render("admin_edit_news.hbs", {
+                    layout: "layout_admin",
+                    new: result[0]
+                })
+            }
+        })
+    } else {
+        res.redirect("/admin_login")
+    }
+})
+
+app.post("/admin_edit_news/:id", jsonParser, (req, res) => {
+    if (String(req.body.news_description).includes("\r\n")) {
+        var mid_desc = ``
+        for (var i = 0; i < String(req.body.news_description).split("\r\n").length; i++) {
+            if (String(req.body.news_description).split("\r\n")[i].length > 0) {
+                if (i != String(req.body.news_description).split("\r\n").length - 1) {
+                    mid_desc += String(req.body.news_description).split("\r\n")[i] + "|"
+                } else {
+                    mid_desc += String(req.body.news_description).split("\r\n")[i]
+                }
+            }
+        }
+        var news_description = mid_desc
+    } else if (String(req.body.news_description).includes("\n")) {
+        var mid_desc = ``
+        for (var i = 0; i < String(req.body.news_description).split("\n").length; i++) {
+            if (String(req.body.news_description).split("\r\n")[i].length > 0) {
+                if (i != String(req.body.news_description).split("\n").length - 1) {
+                    mid_desc += String(req.body.news_description).split("\n")[i] + "|"
+                } else {
+                    mid_desc += String(req.body.news_description).split("\n")[i]
+                }    
+            }
+        }
+        var news_description = mid_desc
+    } else if (String(req.body.news_description).includes("\r")) {
+        var mid_desc = ``
+        for (var i = 0; i < String(req.body.news_description).split("\r").length; i++) {
+            if (String(req.body.news_description).split("\r\n")[i].length > 0) {
+                if (i != String(req.body.news_description).split("\r").length - 1) {
+                    mid_desc += String(req.body.news_description).split("\r")[i] + "|"
+                } else {
+                    mid_desc += String(req.body.news_description).split("\r")[i]
+                }
+            }
+        }
+        var news_description = mid_desc
+    } else {
+        var news_description = req.body.news_description
+    }
+
+    var short_news_description = ''
+    for (var i = 0; i < news_description.split("|").length; i++) {
+        for (var j = 0; j < news_description.split("|")[i].split(" ").length; j++) {
+            short_news_description += String(news_description.split("|")[i].split(" ")[j]) + " "
+            if (short_news_description.length > 300) {
+                break
+            }
+        }
+        if (short_news_description.length > 300) {
+            break
+        }
+    }
+    var title = req.body.news_title
+    pool.query("update news set news_description = ?, title = ?, short_news_description = ? where id = ?", [news_description, title, short_news_description, req.params.id], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.sendStatus(502)
+        } else {
+            res.redirect("/admin_news")
+        }
+    })
 })
 
 app.post("/delete_vacancy", jsonParser, (req, res) => {
@@ -1658,6 +2114,55 @@ app.post("/update_admin", jsonParser, (req, res) => {
             res.redirect("/update_admin")
         }
     })
+})
+
+app.get("/admin_usersapplications", jsonParser, (req, res) => {
+    if (req.session.admin_logged_in) {
+        pool.query("select * from applications", (err, applications) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(502)
+            } else {
+                res.render("admin_usersapplications.hbs", {
+                    layout: 'layout_admin',
+                    applications: applications.reverse()
+                })
+            }
+        })
+    } else {
+        res.redirect("/admin_login")
+    }
+})
+
+app.get("/admin_birthdays", (req, res) => {
+    if (req.session.admin_logged_in) {
+        var month = String(new Date().getMonth() + 1)
+        if (month.length == 1) {
+            var month = "0" + String(new Date().getMonth() + 1)
+        }
+
+        var date = String(new Date().getDate())
+        if (date.length == 1) {
+            var date = "0" + String(new Date().getDate())
+        }
+
+        var date = `${new Date().getFullYear()}-${month}-${date}`
+        pool.query("select * from users where birthday = ?", [date], (err, users) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(502)
+            } else {
+
+                res.render("admin_birthdays.hbs", {
+                    layout: "layout_admin",
+                    menu: true,
+                    users: users
+                })
+            }
+        })
+    } else {
+        res.redirect("/admin_login")
+    }
 })
 
 app.listen(PORT, () => {

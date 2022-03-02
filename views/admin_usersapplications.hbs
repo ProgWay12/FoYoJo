@@ -1,0 +1,19 @@
+<div class="page vacancy">
+    <div class="page_content">
+        {{#each applications}}
+            <div class="each_vacancy">
+                <div class="vacancy_info">
+                    <div class="title left_vacancy_part">
+                        <h3>{{this.user_name}}</h3>
+                    </div>
+                </div>
+                <div class="vacancy_info">
+                    <div class="each_vacancy_desceiption_text left_vacancy_part">
+                        <p>{{this.email}}</p>
+                        <p>{{this.phone}}</p>
+                    </div>
+                </div>
+            </div> 
+        {{/each}}
+    </div>
+</div>

@@ -8,37 +8,10 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="shortcut icon" href="/static/img/Favicon.png" type="image/png">
 </head>
-<body>
-    <div class="adaptive_menu_info">
-        <div class="header_buttons">
-            <button onclick="window.location.href = '/admin_add_vacancy'">Добавить вакансию</button>
-            <button onclick="window.location.href = '/admin'">Все вакансии</button>
-            <button onclick="window.location.href = '/update_admin'">Настройки</button>
-            <div class="header_buttons_info">
-                <p>mail@mail.ru</p>
-            </div>
-            <div class="header_buttons_info">
-                <p>9(999)999-99-99</p>
-            </div>
-        </div>
-    </div>
+<body {{#if menu}}style="background: #2D4054;"{{/if}}>
     <header>
-        <div class="header_logo" onclick="window.location.href = '/'">
-            <h1>Fo<span>Yo</span>Jo</h1>
-        </div>
-        <div class="adaptive_menu" onclick="show_menu(this)">
-            <img src="/static/img/adaptive_menu.png" alt="">
-        </div>
-        <div class="header_buttons admin">
-            <div onclick="window.location.href = '/admin_add_vacancy'" class="header_buttons_info">
-                <p>Новая вакансия</p>
-            </div>
-            <div onclick="window.location.href = '/admin'" class="header_buttons_info">
-                <p>Все вакансии</p>
-            </div>
-            <div onclick="window.location.href = '/update_admin'" class="header_buttons_info">
-                <p>Настройки</p>
-            </div>
+        <div class="header_logo" onclick="window.location.href = '/admin'">
+            <img src="/static/img/main_logo.png" alt="">
         </div>
     </header>
     <main>
@@ -46,7 +19,7 @@
     </main>
     <footer>
         <div class="header_logo">
-            <h1>Fo<span>Yo</span>Jo</h1>
+            <img src="/static/img/main_logo.png" alt="">
         </div>
         <div class="header_buttons">
             <div class="header_buttons_info">

@@ -99,8 +99,16 @@ input {
     display: flex;
 }
 
+footer .header_buttons {
+    width: auto;
+}
+
+footer .header_buttons {
+
+}
+
 .header_buttons.admin {
-    width: 30%;
+    width: auto;
 }
 
 .header_account {
@@ -155,9 +163,14 @@ button:hover {
     cursor: pointer;
 }
 
+
+
 .header_buttons_info {
     display: inline;
-    width: 45%;
+    width: fit-content;
+    margin-left: 30px;
+    margin-right: 30px;
+    text-align: center;
     color: white;
     font-size: 20px;
     border: none;
@@ -180,11 +193,6 @@ button:hover {
 
 .header_buttons_info:hover {
     cursor: pointer;
-}
-
-.header_buttons_info:first-child {
-    margin-left: 5%;
-    margin-right: 5%;
 }
 
 .header_buttons_info p {
@@ -412,6 +420,11 @@ main {
     cursor: pointer;
 }
 
+.heart img {
+    width: 100%;
+    vertical-align: bottom;
+}
+
 .date p {
     line-height: 45px;
     font-size: 18px;
@@ -481,6 +494,18 @@ form textarea::placeholder {
 }
 
 form button {
+    width: 60%;
+    margin-left:20%;
+    background-color: #E26218;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    height: 50px;
+    border: none;
+    outline: none;
+}
+
+form input[type="submit"] {
     width: 60%;
     margin-left:20%;
     background-color: #E26218;
@@ -843,6 +868,32 @@ p img {
     display: none;
 }
 
+.admin_menu {
+    width: 100%;
+    margin-top: 150px;
+}
+
+.admin_menu .header_buttons_info {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    height: fit-content;
+    line-height: 50px;
+}
+
+.admin_menu .header_buttons_info p {
+    line-height: 50px;
+    text-align: center;
+    font-weight: 600;
+    color: #fff;
+}
+
 @media screen and (max-width: 1500px) {
 
     header, footer {
@@ -874,16 +925,19 @@ p img {
 }
 
 @media screen and (max-width: 1350px) {
-    .page_header h2 {
-        padding-left: calc(20% + 20px);
-    }
 
-    .header_buttons {
-        width: 30%;
+    .left_part {
+        width: 26%;
     }
 
     .left_menu {
-        width: 18%;
+        width: 90%;
+        margin-left: 5%;
+    }
+
+    .left_menu {
+        width: 90%;
+        margin-left: 5%;
     }
 
     .left_menu select {
@@ -891,7 +945,7 @@ p img {
     }
 
     .page_content {
-        width: 80%;
+        width: 70%;
     }
 }
 

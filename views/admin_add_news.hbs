@@ -1,0 +1,12 @@
+<div class="login_form register">
+    <div class="page_header">
+        <h2>Добавить новость</h2>
+    </div>
+    <form action="/admin_add_news" method="POST" enctype="multipart/form-data">
+        <input type="text" name="news_title" placeholder="Заголовок">
+        <textarea name="news_description" id="" cols="30" rows="10" placeholder="Описание"></textarea>
+        <label for="imgs_paths">Фотографии для новостной публикации</label>
+        <input type="file" name="imgs_paths" multiple>
+        <input type="submit" value="Опубликовать">
+    </form>
+</div>

@@ -1,62 +1,66 @@
-<div class="page_header ">
-    <h2>Актуальные предложения</h2>
-</div>
-
 <div class="page">
-    <form class="left_menu" action="/show_filtred_admin" method="post">
-        <select name="speciality" id="">
-            <option value="all">Все специальности</option>
-            {{#each specialities}}
-                <option value="{{this.speciality}}">{{this.speciality}}</option>
-            {{/each}}
-        </select>
-        <select name="voivodeship" id="">
-            <option value="all">Все воевудства</option>
-            <option value="Варминьско-Мазурское">Варминьско-Мазурское</option>
-            <option value="Великопольское">Великопольское</option>
-            <option value="Западно-Поморское">Западно-Поморское</option>
-            <option value="Куявско-Поморское">Куявско-Поморское</option>
-            <option value="Лодзинское">Лодзинское</option>
-            <option value="Люблинское">Люблинское</option>
-            <option value="Любушское">Любушское</option>
-            <option value="Мазовецкое">Мазовецкое</option>
-            <option value="Малопольское">Малопольское</option>
-            <option value="Нижнесилезское">Нижнесилезское</option>
-            <option value="Опольское">Опольское</option>
-            <option value="Подкарпатское">Подкарпатское</option>
-            <option value="Подляское">Подляское</option>
-            <option value="Поморское">Поморское</option>
-            <option value="Свентокшиское">Свентокшиское</option>
-            <option value="Силезское">Силезское</option>
-        </select>
-        <select name="city" id="">
-            <option value="all">Все города</option>
-            {{#each cities}}
-                <option value="{{this.city}}">{{this.city}}</option>
-            {{/each}}
-        </select>
-        <select name="vacancy_price" id="">
-            <option value="all">Любая ЗП</option>
-            <option value="0 - 1000">до 1000</option>
-            <option value="1000 - 10000">от 1000 до 10000</option>
-            <option value="10000 - 30000">от 10000 до 30000</option>
-            <option value="30000 - x">от 30000</option>
-        </select>
-        <select name="work_type" id="">
-            <option value="all">Любой график</option>
-            {{#each schedules}}
-                <option value="{{this.schedule_type}}">{{this.schedule_type}}</option>
-            {{/each}}
-        </select>
-        <select name="country" id="">
-            <option value="all">Любая страна</option>
-            {{#each countries}}
-                <option value="{{this.country}}">{{this.country}}</option>
-            {{/each}}
-        </select>
-        <button type="submit">Найти</button>
-    </form>
+    <div class="left_part">
+        <div class="page_header " style="opacity: 0;">
+            <h2>Актуальные предложения</h2>
+        </div>
+        <form class="left_menu" action="/show_filtred_admin" method="post">
+            <select name="speciality" id="">
+                <option value="all">Все специальности</option>
+                {{#each specialities}}
+                    <option value="{{this.speciality}}">{{this.speciality}}</option>
+                {{/each}}
+            </select>
+            <select name="voivodeship" id="">
+                <option value="all">Все воевудства</option>
+                <option value="Варминьско-Мазурское">Варминьско-Мазурское</option>
+                <option value="Великопольское">Великопольское</option>
+                <option value="Западно-Поморское">Западно-Поморское</option>
+                <option value="Куявско-Поморское">Куявско-Поморское</option>
+                <option value="Лодзинское">Лодзинское</option>
+                <option value="Люблинское">Люблинское</option>
+                <option value="Любушское">Любушское</option>
+                <option value="Мазовецкое">Мазовецкое</option>
+                <option value="Малопольское">Малопольское</option>
+                <option value="Нижнесилезское">Нижнесилезское</option>
+                <option value="Опольское">Опольское</option>
+                <option value="Подкарпатское">Подкарпатское</option>
+                <option value="Подляское">Подляское</option>
+                <option value="Поморское">Поморское</option>
+                <option value="Свентокшиское">Свентокшиское</option>
+                <option value="Силезское">Силезское</option>
+            </select>
+            <select name="city" id="">
+                <option value="all">Все города</option>
+                {{#each cities}}
+                    <option value="{{this.city}}">{{this.city}}</option>
+                {{/each}}
+            </select>
+            <select name="vacancy_price" id="">
+                <option value="all">Любая ЗП</option>
+                <option value="0 - 1000">до 1000</option>
+                <option value="1000 - 10000">от 1000 до 10000</option>
+                <option value="10000 - 30000">от 10000 до 30000</option>
+                <option value="30000 - x">от 30000</option>
+            </select>
+            <select name="work_type" id="">
+                <option value="all">Любой график</option>
+                {{#each schedules}}
+                    <option value="{{this.schedule_type}}">{{this.schedule_type}}</option>
+                {{/each}}
+            </select>
+            <select name="country" id="">
+                <option value="all">Любая страна</option>
+                {{#each countries}}
+                    <option value="{{this.country}}">{{this.country}}</option>
+                {{/each}}
+            </select>
+            <button type="submit">Найти</button>
+        </form>
+    </div>
     <div class="page_content">
+        <div class="page_header ">
+            <h2>Актуальные предложения</h2>
+        </div>
         {{#each vacancies}}
             <div class="each_vacancy">
                 <div class="vacancy_info">

@@ -14,7 +14,8 @@ document.getElementById("reg_form").onsubmit = (e) => {
         whatsapp_numb: document.getElementById("reg_form").querySelector("input[name='whatsapp_numb']").value,
         viber_numb: document.getElementById("reg_form").querySelector("input[name='viber_numb']").value,
         telegram_numb: document.getElementById("reg_form").querySelector("input[name='telegram_numb']").value,
-        pass: document.getElementById("reg_form").querySelector("input[name='pass']").value
+        pass: document.getElementById("reg_form").querySelector("input[name='pass']").value,
+        birthday: document.getElementById("reg_form").querySelector("input[name='birthday']").value
     })
 
     let req = new XMLHttpRequest();
