@@ -658,7 +658,7 @@ form input[type="submit"] {
 }
 
 .adaptive_menu_info {
-    transform: translateY(-300px);
+    transform: translateY(-500px);
 }
 
 .adaptive_menu_info.element-show {
@@ -667,7 +667,7 @@ form input[type="submit"] {
 }
 
 .adaptive_menu_info.element-hiden {
-    transform: translateY(-300px);
+    transform: translateY(-500px);
     transition: all 1s;
 }
 
@@ -747,7 +747,7 @@ form input[type="submit"] {
     top: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
-    padding-top: 10%;
+    padding-top: 100px;
 }
 
 .modal_img_slider {

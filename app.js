@@ -96,6 +96,7 @@ const pool = mysql.createPool({
 });
 */
 
+
 const pool = mysql.createPool({
     host: "remotemysql.com",
     port: 3306,
@@ -103,7 +104,6 @@ const pool = mysql.createPool({
     database: "p4caLCC1oc",
     password: "ys3fXpumpL"   
 });
-
 app.get("/", (req, res) => {
     pool.query("select * from news", (err, news) => {
         if (err) {
@@ -2152,7 +2152,6 @@ app.get("/admin_birthdays", (req, res) => {
                 console.log(err)
                 res.sendStatus(502)
             } else {
-
                 res.render("admin_birthdays.hbs", {
                     layout: "layout_admin",
                     menu: true,
