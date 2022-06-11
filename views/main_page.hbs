@@ -31,7 +31,8 @@
         <div class="page_header ">
             <h2>Актуальные предложения</h2>
         </div>
-        <div class="each_vacancy main">
+        {{#if is_more}}
+            <div class="each_vacancy main">
             <div class="vacancy_info">
                 <div class="title left_vacancy_part">
                     <h3>{{main_vacancy.vacancy_title}}</h3>
@@ -56,87 +57,67 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="each_vacancy main adaptive">
-            <div class="vacancy_info">
-                <div class="title left_vacancy_part">
-                    <h3>Отредактированная вакансия2 321321</h3>
-                </div>
-                <div class="price">
-                    <h3>21321 Zł</h3>
-                </div>
             </div>
-            <div class="vacancy_info">
-                <div class="each_vacancy_desceiption_text left_vacancy_part">
-                    <p> <img src="/static/img/work_place_imgs/photo_2021-04-22_17-57-41.jpg" alt=""> dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa<a class="show_more" href="/vacancy/{{this.vacancies_info.id}}">Показать больше</a></p>
-                </div>
-            </div>
-            <div class="vacancy_info">
-                <div class="date left_vacancy_part">
-                    <p>Дата публикации: 5.0.2022</p>
-                </div>
-                <div class="btns">
-                    
-                    <div class="vacancy_submit">
-                        <a href="/vacancy/{{this.vacancies_info.id}}">Откликнуться</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="each_vacancy main adaptive">
-            <div class="vacancy_info">
-                <div class="title left_vacancy_part">
-                    <h3>Отредактированная вакансия2 321321</h3>
-                </div>
-                <div class="price">
-                    <h3>21321 Zł</h3>
-                </div>
-            </div>
-            <div class="vacancy_info">
-                <div class="each_vacancy_desceiption_text left_vacancy_part">
-                    <p> <img src="/static/img/work_place_imgs/photo_2021-04-22_17-57-41.jpg" alt=""> dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa<a class="show_more" href="/vacancy/{{this.vacancies_info.id}}">Показать больше</a></p>
-                </div>
-            </div>
-            <div class="vacancy_info">
-                <div class="date left_vacancy_part">
-                    <p>Дата публикации: 5.0.2022</p>
-                </div>
-                <div class="btns">
-                    
-                    <div class="vacancy_submit">
-                        <a href="/vacancy/{{this.vacancies_info.id}}">Откликнуться</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="each_vacancy main adaptive">
-            <div class="vacancy_info">
-                <div class="title left_vacancy_part">
-                    <h3>Отредактированная вакансия2 321321</h3>
-                </div>
-                <div class="price">
-                    <h3>21321 Zł</h3>
-                </div>
-            </div>
-            <div class="vacancy_info">
-                <div class="each_vacancy_desceiption_text left_vacancy_part">
-                    <p> <img src="/static/img/work_place_imgs/photo_2021-04-22_17-57-41.jpg" alt=""> dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa waewqe wa dqdwqdw dwewwdwa<a class="show_more" href="/vacancy/{{this.vacancies_info.id}}">Показать больше</a></p>
-                </div>
-            </div>
-            <div class="vacancy_info">
-                <div class="date left_vacancy_part">
-                    <p>Дата публикации: 5.0.2022</p>
-                </div>
-                <div class="btns">
-                    
-                    <div class="vacancy_submit">
-                        <a href="/vacancy/{{this.vacancies_info.id}}">Откликнуться</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="vacancy_row" alt="в случае если не адаптив">
             {{#each sub_vacancies}}
+                <div class="each_vacancy main adaptive">
+                    <div class="vacancy_info">
+                        <div class="title left_vacancy_part">
+                            <h3>{{this.vacancy_title}}</h3>
+                        </div>
+                        <div class="price">
+                            <h3>{{this.vacancy_price}} Zł</h3>
+                        </div>
+                    </div>
+                    <div class="vacancy_info">
+                        <div class="each_vacancy_desceiption_text left_vacancy_part">
+                            <p> <img src="{{this.preview_img}}" alt=""> {{this.short_decription}}<a class="show_more" href="/vacancy/{{this.id}}">Показать больше</a></p>
+                        </div>
+                    </div>
+                    <div class="vacancy_info">
+                        <div class="date left_vacancy_part">
+                            <p>Дата публикации: {{this._date}}</p>
+                        </div>
+                        <div class="btns">
+                            <div class="vacancy_submit">
+                                <a href="/vacancy/{{this.id}}">Откликнуться</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+            
+            <div class="vacancy_row" alt="в случае если не адаптив">
+                {{#each sub_vacancies}}
+                    <div class="each_vacancy">
+                        <div class="vacancy_info">
+                            <div class="title left_vacancy_part">
+                                <h3>{{this.vacancy_title}}</h3>
+                            </div>
+                            <div class="price">
+                                <h3>{{this.vacancy_price}} Zł</h3>
+                            </div>
+                        </div>
+                        <div class="vacancy_info">
+                            <div class="each_vacancy_desceiption_text left_vacancy_part">
+                                <p> <img src="{{this.preview_img}}" alt=""> {{this.short_decription}}<a class="show_more" href="/vacancy/{{this.id}}">Показать больше</a></p>
+                            </div>
+                        </div>
+                        <div class="vacancy_info">
+                            <div class="date left_vacancy_part">
+                                <p>Дата публикации: {{this._date}}</p>
+                            </div>
+                            <div class="btns">
+                            
+                                <div class="vacancy_submit">
+                                    <a href="/vacancy/{{this.id}}">Откликнуться</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        {{else}}
+            {{#each vacancies}}
                 <div class="each_vacancy">
                     <div class="vacancy_info">
                         <div class="title left_vacancy_part">
@@ -156,14 +137,14 @@
                             <p>Дата публикации: {{this._date}}</p>
                         </div>
                         <div class="btns">
-
                             <div class="vacancy_submit">
                                 <a href="/vacancy/{{this.id}}">Откликнуться</a>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> 
             {{/each}}
-        </div>
+        {{/if}}
+        
     </div>
 </div>

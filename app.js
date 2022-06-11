@@ -55,46 +55,12 @@ app.use(multer({storage:storageConfig}).fields([{
     name: "imgs_paths",
     maxCount: 1000
 }]));
-/*
-db
-Username: p4caLCC1oc
-
-Database name: p4caLCC1oc
-
-Password: lAr3BmacL0
-
-Server: remotemysql.com
-
-Port: 3306
-
-tables:
-users (email (longtext), pass (longtext), ) +
-admins +
-vacancies +
-favorites (user_id (int), vacancy_id (int) ) +
-responses (user_id (int), vacancy_id (int) ) +
-cities (city (longtext)) +
-schedules (schedule_type (longtext)) +
-specialities (speciality (longtext)) +
-countries (country (longtext))
-*/
 
 app.use(session({
 	secret: 'secret',
 	resave: true,
 	saveUninitialized: true
 }));
-
-
-/*
-const pool = mysql.createPool({
-    host: "localhost",
-    port: 3306,
-    user: "yanukd5w_foyojo",
-    database: "yanukd5w_foyojo",
-    password: "t*LLrXU1"   
-});
-*/
 
 
 const pool = mysql.createPool({
@@ -104,6 +70,7 @@ const pool = mysql.createPool({
     database: "p4caLCC1oc",
     password: "ys3fXpumpL"   
 });
+
 app.get("/", (req, res) => {
     pool.query("select * from news", (err, news) => {
         if (err) {
@@ -116,41 +83,47 @@ app.get("/", (req, res) => {
                     res.sendStatus(502)
                 } else {
                     vacancies = vacancies.reverse()
-                    var main_vacancy = {
-                        id: vacancies[0].id,
-                        vacancy_title: vacancies[0].vacancy_title,
-                        vacancy_price: vacancies[0].vacancy_price,
-                        short_decription: vacancies[0].short_decription,
-                        _date: vacancies[0]._date,
-                        preview_img: String(vacancies[0].work_place_imgs_paths).split("|")[0]
-                    }
-
-                    var sub_vacancies = [
-                        {
-                            id: vacancies[1].id,
-                            vacancy_title: vacancies[1].vacancy_title,
-                            vacancy_price: vacancies[1].vacancy_price,
-                            short_decription: vacancies[1].short_decription,
-                            _date: vacancies[1]._date,
-                            preview_img: String(vacancies[1].work_place_imgs_paths).split("|")[0]
-                        },
-                        {
-                            id: vacancies[2].id,
-                            vacancy_title: vacancies[2].vacancy_title,
-                            vacancy_price: vacancies[2].vacancy_price,
-                            short_decription: vacancies[2].short_decription,
-                            _date: vacancies[2]._date,
-                            preview_img: String(vacancies[2].work_place_imgs_paths).split("|")[0]
-                        },
-                        {
-                            id: vacancies[3].id,
-                            vacancy_title: vacancies[3].vacancy_title,
-                            vacancy_price: vacancies[3].vacancy_price,
-                            short_decription: vacancies[3].short_decription,
-                            _date: vacancies[3]._date,
-                            preview_img: String(vacancies[3].work_place_imgs_paths).split("|")[0]
+                    var is_more = true
+                    if (vacancies.length >= 4) {
+                        var main_vacancy = {
+                            id: vacancies[0].id,
+                            vacancy_title: vacancies[0].vacancy_title,
+                            vacancy_price: vacancies[0].vacancy_price,
+                            short_decription: vacancies[0].short_decription,
+                            _date: vacancies[0]._date,
+                            preview_img: String(vacancies[0].work_place_imgs_paths).split("|")[0]
                         }
-                    ]
+    
+                        var sub_vacancies = [
+                            {
+                                id: vacancies[1].id,
+                                vacancy_title: vacancies[1].vacancy_title,
+                                vacancy_price: vacancies[1].vacancy_price,
+                                short_decription: vacancies[1].short_decription,
+                                _date: vacancies[1]._date,
+                                preview_img: String(vacancies[1].work_place_imgs_paths).split("|")[0]
+                            },
+                            {
+                                id: vacancies[2].id,
+                                vacancy_title: vacancies[2].vacancy_title,
+                                vacancy_price: vacancies[2].vacancy_price,
+                                short_decription: vacancies[2].short_decription,
+                                _date: vacancies[2]._date,
+                                preview_img: String(vacancies[2].work_place_imgs_paths).split("|")[0]
+                            },
+                            {
+                                id: vacancies[3].id,
+                                vacancy_title: vacancies[3].vacancy_title,
+                                vacancy_price: vacancies[3].vacancy_price,
+                                short_decription: vacancies[3].short_decription,
+                                _date: vacancies[3]._date,
+                                preview_img: String(vacancies[3].work_place_imgs_paths).split("|")[0]
+                            }
+                        ]
+                    } else {
+                        is_more = false
+                    }
+                    
 
                     if (req.session.logged_in) {
                         res.render("main_page.hbs", {
@@ -160,7 +133,9 @@ app.get("/", (req, res) => {
                             main_page: true,
                             news: news.reverse(),
                             main_vacancy: main_vacancy,
-                            sub_vacancies: sub_vacancies
+                            sub_vacancies: sub_vacancies,
+                            vacancies: vacancies,
+                            is_more: is_more
                         })
                     } else {
                         res.render("main_page.hbs", {
@@ -168,7 +143,9 @@ app.get("/", (req, res) => {
                             main_page: true,
                             news: news.reverse(),
                             main_vacancy: main_vacancy,
-                            sub_vacancies: sub_vacancies
+                            sub_vacancies: sub_vacancies,
+                            vacancies: vacancies,
+                            is_more: is_more
                         })
                     }
                 }
